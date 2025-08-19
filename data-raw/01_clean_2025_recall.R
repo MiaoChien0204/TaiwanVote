@@ -1,7 +1,7 @@
 # data-raw/01_clean_2025_recall.R
 # Purpose: Clean "2025 Legislative Recall" raw xlsx files -> standardized CSV (village level)
 # Input : data-raw/raw/*.xlsx
-# Output: data-raw/release/recall_2025_<candidate>_village.csv
+# Output: data-raw/release/2025_legislator_recall.csv
 
 
 # 行政區別	town	鄉鎮市區，例如「東區」
@@ -162,6 +162,6 @@ all_data = lapply(files, function(file) {
   clean_one(file)
 }) %>% bind_rows()
 
-write_csv(all_data, file.path(out_dir, "2025_recall.csv"))
+write_csv(all_data, file.path(out_dir, "2025_legislator_recall.csv"))
 
 cli_h1("All done")
