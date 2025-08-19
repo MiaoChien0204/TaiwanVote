@@ -156,21 +156,12 @@ if (length(files) == 0L) {
   cli_abort("No source files (*.xlsx) found. Put them into {in_dir}/")
 }
 
-walk(files, function(file) {
-  dat = clean_one(file)
 
-  # Use candidate Chinese name in filename
-  cand = unique(dat$candidate)
-  cand = cand[!is.na(cand)][1]
-  out_name = if (!is.na(cand)) {
-    glue::glue("recall_2025_{cand}_village.csv")
-  } else {
-    glue::glue("recall_2025_candidateNA_village.csv")
-  }
 
-  out_file = file.path(out_dir, out_name)
-  write_csv(dat, out_file)
-  cli_alert_success("Exported: {out_file} ({nrow(dat)} rows)")
-}, .progress = TRUE)
+all_data = lapply(files, function(file) {
+  clean_one(file)
+}) %>% bind_rows()
+
+write_csv(all_data, file.path(out_dir, "2025_recall.csv"))
 
 cli_h1("All done")
