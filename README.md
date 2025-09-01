@@ -77,21 +77,31 @@ vote and their electoral districts:
 library(TaiwanVote)
 ```
 
-### 1) By candidate (village level)
+### Get all data (village or town level)
+
+``` r
+all_village_data <- tv_get_recall_2025_all(level = "village")
+head(all_village_data)
+
+all_town_data <- tv_get_recall_2025_all(level = "town")
+head(all_town_data)
+```
+
+### By candidate (village level)
 
 ``` r
 x <- tv_get_recall_2025_by_candidate("鄭正鈐", level = "village") 
 head(x)
 ```
 
-### 2) Aggregate to town
+### Aggregate to town
 
 ``` r
 x_town <- tv_get_recall_2025_by_candidate("鄭正鈐", level = "town") 
 head(x_town)
 ```
 
-### 3) By area name (town)
+### By area name (town)
 
 ``` r
 h1 <- tv_get_recall_2025_by_area("新竹市東區", level = "village", candidate = "鄭正鈐") head(h1)
