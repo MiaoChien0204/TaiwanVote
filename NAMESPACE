@@ -3,3 +3,5 @@
 export(tv_get_recall_2025_by_area)
 export(tv_get_recall_2025_by_candidate)
 importFrom(dplyr,"%>%")
+
+export(tv_cache_clear)
