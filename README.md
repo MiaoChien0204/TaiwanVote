@@ -10,7 +10,7 @@ various polling places. It allows users to query voting results by
 candidate name, administrative district, village, and other levels, and
 supports aggregation and analysis.
 
-### Package Description 主要功能
+## Package Description 主要功能
 
 - 依候選人姓名查詢各村里/鄉鎮/區的罷免投票結果
 
@@ -77,21 +77,21 @@ vote and their electoral districts:
 library(TaiwanVote)
 ```
 
-# 1) By candidate (village level)
+### 1) By candidate (village level)
 
 ``` r
 x <- tv_get_recall_2025_by_candidate("鄭正鈐", level = "village") 
 head(x)
 ```
 
-# 2) Aggregate to town
+### 2) Aggregate to town
 
 ``` r
 x_town <- tv_get_recall_2025_by_candidate("鄭正鈐", level = "town") 
 head(x_town)
 ```
 
-# 3) By area name (town)
+### 3) By area name (town)
 
 ``` r
 h1 <- tv_get_recall_2025_by_area("新竹市東區", level = "village", candidate = "鄭正鈐") head(h1)
