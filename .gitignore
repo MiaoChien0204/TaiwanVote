@@ -7,3 +7,5 @@
 
 /data-raw/raw/
 /data-raw/release/
+
+*.Rmd

@@ -17,6 +17,10 @@
   file.path(.get_cache_dir(), "2025_legislator_recall.csv")
 }
 
+#' Clear cached recall data
+#' 
+#' Remove the cached 2025_legislator_recall.csv file.
+#' @export
 tv_cache_clear <- function() {
   p <- .get_cached_csv_path()
   if (file.exists(p)) unlink(p)
