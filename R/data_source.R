@@ -3,7 +3,7 @@
 
 .get_release_url <- function() {
   # You can change this to use piggyback, but URL is simplest for now.
-  "https://github.com/MiaoChien0204/TaiwanVote/releases/download/v0.1.0/2025_legislator_recall.csv"
+  "https://github.com/MiaoChien0204/TaiwanVote/releases/latest/download/2025_legislator_recall.csv"
 }
 
 .get_cache_dir <- function() {
