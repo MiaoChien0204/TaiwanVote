@@ -79,13 +79,11 @@ tv_get_recall(year = 2025, party = "中國國民黨")
 # Get data for a specific county
 tv_get_recall(year = 2025, level = "county", area_name = "新竹市")
 
-# Get data for a specific town (both formats supported)
+# Get data for a specific town (must include county/city name)
 tv_get_recall(year = 2025, level = "town", area_name = "新竹市東區")
-tv_get_recall(year = 2025, level = "town", area_name = "東區")  # Less specific
 
-# Get data for a specific village (both formats supported)
+# Get data for a specific village (must include full address)
 tv_get_recall(year = 2025, level = "village", area_name = "新竹市東區三民里")
-tv_get_recall(year = 2025, level = "village", area_name = "三民里")  # Less specific
 }
 
 }

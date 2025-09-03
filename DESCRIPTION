@@ -19,9 +19,8 @@ Imports:
     dplyr,
     readr,
     tibble,
-    rlang
+    rlang,
+    httr
 Suggests: 
-    cli,
-    janitor,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

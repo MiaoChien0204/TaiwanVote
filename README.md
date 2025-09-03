@@ -1,3 +1,8 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -35,64 +40,64 @@ researchers and citizens.
 
 #### **2025 Legislative Recall Election \| 2025 年立法委員罷免案**
 
-- ✅ **Core Function**: `tv_get_recall()` - Unified recall election
-  query interface
-- ✅ **核心函式**: 統一的罷免案查詢介面
-- ✅ **Multi-dimensional Queries**: Support queries by year, candidate,
-  party, and region
-- ✅ **多維度查詢**: 支援按年份、候選人、政黨、地區查詢
-- ✅ **Multi-level Data**: Support village, township, and county-level
-  data aggregation
-- ✅ **多層級資料**: 支援村里級、鄉鎮級、縣市級資料聚合
-- ✅ **Standardized Format**: Unified field design aligned with ultimate
-  vision
-- ✅ **標準化格式**: 符合終極願景的統一欄位設計
-- ✅ **Helper Functions**: `tv_list_available_recalls()`,
-  `tv_list_available_candidates()`, etc.
-- ✅ **輔助函式**: 等輔助查詢功能
-- ✅ **Complete Data**: Village-level voting results for all 31
-  legislators nationwide
-- ✅ **完整資料**: 涵蓋全台 31 位立委的村里級投票結果
+-   ✅ **Core Function**: `tv_get_recall()` - Unified recall election
+    query interface
+-   ✅ **核心函式**: 統一的罷免案查詢介面
+-   ✅ **Multi-dimensional Queries**: Support queries by year,
+    candidate, party, and region
+-   ✅ **多維度查詢**: 支援按年份、候選人、政黨、地區查詢
+-   ✅ **Multi-level Data**: Support village, township, and county-level
+    data aggregation
+-   ✅ **多層級資料**: 支援村里級、鄉鎮級、縣市級資料聚合
+-   ✅ **Standardized Format**: Unified field design aligned with
+    ultimate vision
+-   ✅ **標準化格式**: 符合終極願景的統一欄位設計
+-   ✅ **Helper Functions**: `tv_list_available_recalls()`,
+    `tv_list_available_candidates()`, etc.
+-   ✅ **輔助函式**: 等輔助查詢功能
+-   ✅ **Complete Data**: Village-level voting results for all 31
+    legislators nationwide
+-   ✅ **完整資料**: 涵蓋全台 31 位立委的村里級投票結果
 
 #### **Data Infrastructure \| 資料基礎建設**
 
-- ✅ **Standardized Fields**: Unified data field design (`year`,
-  `data_type`, `office`, etc.)
-- ✅ **標準化欄位**: 實作統一的資料欄位設計
-- ✅ **File Naming Convention**: Adopts `{year}_{office}_recall.csv`
-  format
-- ✅ **檔案命名規範**: 採用標準格式
-- ✅ **Caching Mechanism**: Automatic download and local cache
-  management
-- ✅ **快取機制**: 自動下載與本地快取管理
+-   ✅ **Standardized Fields**: Unified data field design (`year`,
+    `data_type`, `office`, etc.)
+-   ✅ **標準化欄位**: 實作統一的資料欄位設計
+-   ✅ **File Naming Convention**: Adopts `{year}_{office}_recall.csv`
+    format
+-   ✅ **檔案命名規範**: 採用標準格式
+-   ✅ **Caching Mechanism**: Automatic download and local cache
+    management
+-   ✅ **快取機制**: 自動下載與本地快取管理
 
 ### 🔄 In Development \| 開發中功能
 
 #### **Election Data Expansion \| 選舉資料擴展**
 
-- 🔄 **`tv_get_election()` Function**: Unified election data query
-  interface
-- 🔄 **函式**: 統一的選舉資料查詢介面
-- 🔄 **Historical Presidential Elections**: 2024, 2020, 2016
-  presidential election data
-- 🔄 **歷年總統選舉**: 總統副總統選舉資料
-- 🔄 **Legislative Elections**: 2024, 2020 legislative election data
-- 🔄 **立法委員選舉**: 立法委員選舉資料
+-   🔄 **`tv_get_election()` Function**: Unified election data query
+    interface
+-   🔄 **函式**: 統一的選舉資料查詢介面
+-   🔄 **Historical Presidential Elections**: 2024, 2020, 2016
+    presidential election data
+-   🔄 **歷年總統選舉**: 總統副總統選舉資料
+-   🔄 **Legislative Elections**: 2024, 2020 legislative election data
+-   🔄 **立法委員選舉**: 立法委員選舉資料
 
 ### 📋 Planned Features \| 規劃中功能
 
 #### **Complete Election System \| 完整選舉體系**
 
-- 📋 **Local Elections**: Mayor and councilor election data
-- 📋 **地方選舉**: 縣市長、縣市議員選舉資料
-- 📋 **Grassroots Elections**: Township mayor and village chief election
-  data
-- 📋 **基層選舉**: 鄉鎮市長、村里長選舉資料
-- 📋 **Other Recall Elections**: Mayor and councilor recall election
-  data
-- 📋 **其他罷免案**: 縣市長、議員罷免案資料
-- 📋 **Referendums**: Historical referendum data
-- 📋 **公民投票**: 歷年公投案資料
+-   📋 **Local Elections**: Mayor and councilor election data
+-   📋 **地方選舉**: 縣市長、縣市議員選舉資料
+-   📋 **Grassroots Elections**: Township mayor and village chief
+    election data
+-   📋 **基層選舉**: 鄉鎮市長、村里長選舉資料
+-   📋 **Other Recall Elections**: Mayor and councilor recall election
+    data
+-   📋 **其他罷免案**: 縣市長、議員罷免案資料
+-   📋 **Referendums**: Historical referendum data
+-   📋 **公民投票**: 歷年公投案資料
 
 ## Installation \| 安裝
 
@@ -136,11 +141,11 @@ tv_list_available_areas(level = "county")
 
 ``` r
 # Complete village-level data | 村里層級的完整資料
-all_village_data <- tv_get_recall(year = 2025, level = "village")
+all_village_data <- tv_get_recall(year = 2025)
 head(all_village_data)
 
-# County-level aggregated data | 縣市層級的聚合資料
-all_county_data <- tv_get_recall(year = 2025, level = "county")
+# Get data for specific county | 取得特定縣市資料
+all_county_data <- tv_get_recall(year = 2025, county_name = "新竹市")
 head(all_county_data)
 ```
 
@@ -151,8 +156,8 @@ head(all_county_data)
 zheng_data <- tv_get_recall(year = 2025, candidate = "鄭正鈐")
 head(zheng_data)
 
-# County-level results for specific candidate | 特定候選人的縣市層級結果
-zheng_county <- tv_get_recall(year = 2025, candidate = "鄭正鈐", level = "county")
+# Candidate results in specific county | 特定候選人在特定縣市的結果
+zheng_county <- tv_get_recall(year = 2025, candidate = "鄭正鈐", county_name = "新竹市")
 head(zheng_county)
 ```
 
@@ -168,19 +173,15 @@ head(kmt_data)
 
 ``` r
 # Query results for specific county/city | 查詢特定縣市的罷免案結果
-hsinchu_data <- tv_get_recall(year = 2025, area_name = "新竹市")
+hsinchu_data <- tv_get_recall(year = 2025, county_name = "新竹市")
 head(hsinchu_data)
 
 # Query results for specific township/district | 查詢特定鄉鎮市區的結果
-# Both formats are supported | 支援兩種格式
-dongqu_data1 <- tv_get_recall(year = 2025, area_name = "新竹市東區", level = "town")
-dongqu_data2 <- tv_get_recall(year = 2025, area_name = "東區", level = "town")  # Less specific
+dongqu_data1 <- tv_get_recall(year = 2025, town_name = "新竹市東區")
 head(dongqu_data1)
 
 # Query results for specific village | 查詢特定村里的結果
-# Both formats are supported | 支援兩種格式
-village_data1 <- tv_get_recall(year = 2025, area_name = "新竹市東區三民里", level = "village")
-village_data2 <- tv_get_recall(year = 2025, area_name = "三民里", level = "village")  # Less specific
+village_data1 <- tv_get_recall(year = 2025, village_name = "新竹市東區三民里")
 head(village_data1)
 ```
 
@@ -191,7 +192,7 @@ head(village_data1)
 detailed_data <- tv_get_recall(
   year = 2025, 
   candidate = "鄭正鈐", 
-  area_name = "新竹市"
+  county_name = "新竹市"
 )
 head(detailed_data)
 
@@ -199,8 +200,7 @@ head(detailed_data)
 district_data <- tv_get_recall(
   year = 2025, 
   candidate = "鄭正鈐", 
-  area_name = "新竹市東區", 
-  level = "town"
+  town_name = "新竹市東區"
 )
 head(district_data)
 
@@ -208,8 +208,7 @@ head(district_data)
 village_detail <- tv_get_recall(
   year = 2025, 
   candidate = "鄭正鈐", 
-  area_name = "新竹市東區三民里", 
-  level = "village"
+  village_name = "新竹市東區三民里"
 )
 head(village_detail)
 ```
@@ -232,9 +231,9 @@ tv_get_election(
 
 # Recall election data query (implemented) | 罷免案資料查詢 (已實作)
 tv_get_recall(
-  year = 2025,          # Recall year | 罷免年份
-  office = "legislator", # Office being recalled | 被罷免職務
-  level = "village"     # Data level | 資料層級
+  year = 2025,              # Recall year | 罷免年份
+  office = "legislator",    # Office being recalled | 被罷免職務
+  county_name = "新竹市"     # County name | 縣市名稱
 )
 ```
 
@@ -243,12 +242,13 @@ tv_get_recall(
 #### **Core Parameters \| 核心參數:**
 
 | Parameter 參數 | Description 描述 | Example Values 範例值 |
-|:---|:---|:---|
+|:-----------------------|:-----------------------|:-----------------------|
 | `year` | Election/Recall year 選舉/罷免年份 | `2024`, `2025` |
 | `office` | Office type 職務類型 | `"president"`, `"legislator"`, `"mayor"` |
 | `sub_type` | Office subtype 職務子類型 | `"regional"`, `"indigenous"`, `"at_large"` |
-| `level` | Data level 資料層級 | `"village"`, `"town"`, `"county"` |
-| `area_name` | Administrative area name 行政區名稱 | `"臺北市"`, `"新竹市東區"` |
+| `county_name` | County/City name 縣市名稱 | `"新竹市"`, `"桃園市"` |
+| `town_name` | Town/District name with county 鄉鎮市區名稱（含縣市） | `"新竹市東區"`, `"桃園市桃園區"` |
+| `village_name` | Village name with full address 村里名稱（含完整地址） | `"新竹市東區三民里"`, `"桃園市桃園區文中里"` |
 | `candidate` | Candidate name 候選人姓名 | `"鄭正鈐"`, `"蔡英文"` |
 | `party` | Party name 政黨名稱 | `"中國國民黨"`, `"民主進步黨"` |
 
@@ -258,17 +258,17 @@ All functions return data with unified field design:
 
 所有函式回傳的資料都採用統一的欄位設計：
 
-- `year` (Year 年份)
-- `data_type` (Data type: “election” or “recall” 資料類型)
-- `office` (Office 職務)
-- `sub_type` (Office subtype 職務子類型)
-- `county`, `town`, `village` (Administrative divisions 行政區劃)
-- `candidate_name` (Candidate name 候選人姓名)
-- `party` (Political party 政黨)
-- `votes` (Vote count/Agree votes 得票數/同意票數)
-- `vote_percentage` (Vote percentage 得票率)
-- `is_elected` / `is_recalled` (Elected/Recalled boolean
-  當選/罷免成功布林值)
+-   `year` (Year 年份)
+-   `data_type` (Data type: “election” or “recall” 資料類型)
+-   `office` (Office 職務)
+-   `sub_type` (Office subtype 職務子類型)
+-   `county`, `town`, `village` (Administrative divisions 行政區劃)
+-   `candidate_name` (Candidate name 候選人姓名)
+-   `party` (Political party 政黨)
+-   `votes` (Vote count/Agree votes 得票數/同意票數)
+-   `vote_percentage` (Vote percentage 得票率)
+-   `is_elected` / `is_recalled` (Elected/Recalled boolean
+    當選/罷免成功布林值)
 
 ## Available Legislators for 2025 Recall \| 可查詢立委名單 (2025年罷免案)
 
@@ -313,19 +313,19 @@ members of the Kuomintang):
 
 ## Data Information \| 資料說明
 
-- **Data Source**: Central Election Commission (中央選舉委員會)
-- **Data Level**: Village-level (aggregatable to township and county
-  levels)
-- **資料層級**: 村里級（可聚合至鄉鎮級、縣市級）
-- **Update Frequency**: Updated upon official election result
-  announcements
-- **更新頻率**: 隨選舉結果公布更新
-- **Caching Mechanism**: Automatic local caching to reduce repeated
-  downloads
-- **快取機制**: 自動快取至本地，減少重複下載
-- **Data Format**: Standardized CSV format following tidy data
-  principles
-- **資料格式**: 標準化 CSV 格式，符合 tidy data 原則
+-   **Data Source**: Central Election Commission (中央選舉委員會)
+-   **Data Level**: Village-level (aggregatable to township and county
+    levels)
+-   **資料層級**: 村里級（可聚合至鄉鎮級、縣市級）
+-   **Update Frequency**: Updated upon official election result
+    announcements
+-   **更新頻率**: 隨選舉結果公布更新
+-   **Caching Mechanism**: Automatic local caching to reduce repeated
+    downloads
+-   **快取機制**: 自動快取至本地，減少重複下載
+-   **Data Format**: Standardized CSV format following tidy data
+    principles
+-   **資料格式**: 標準化 CSV 格式，符合 tidy data 原則
 
 ## Use Cases \| 使用案例
 
@@ -333,16 +333,16 @@ This package is particularly valuable for:
 
 本套件特別適用於：
 
-- **Academic Research**
-- **學術研究**: Political science, sociology, and electoral studies
-- **Journalism**
-- **新聞報導**: Data-driven election analysis and reporting
-- **Civil Society**
-- **公民社會**: Citizen participation and democratic oversight
-- **Policy Analysis**
-- **政策分析**: Government and think tank research
-- **Educational Purposes**
-- **教育用途**: Teaching quantitative political analysis
+-   **Academic Research**
+-   **學術研究**: Political science, sociology, and electoral studies
+-   **Journalism**
+-   **新聞報導**: Data-driven election analysis and reporting
+-   **Civil Society**
+-   **公民社會**: Citizen participation and democratic oversight
+-   **Policy Analysis**
+-   **政策分析**: Government and think tank research
+-   **Educational Purposes**
+-   **教育用途**: Teaching quantitative political analysis
 
 ## License \| 授權
 

@@ -7,15 +7,13 @@
 #' @param year Numeric vector. The election year(s). Currently supports: 2025.
 #' @param office Character. The type of office. Currently supports: "legislator".
 #' @param sub_type Character. The sub-type of election. Currently supports: "regional".
-#' @param level Character. The administrative level for filtering. Options: 
-#'   "all" (default), "county", "town", "village", "polling_station".
-#'   When "all" is used with area_name, it will search across all administrative levels.
-#' @param area_name Character. The name of the area to filter by. Supports both 
-#'   simple names (e.g., "東區", "三民里") and full administrative names 
-#'   (e.g., "新竹市東區", "新竹市東區三民里"). When using full names, the function
-#'   will automatically parse and match the appropriate administrative levels.
-#' @param candidate Character. The name of the candidate to filter by.
-#' @param party Character. The political party to filter by.
+#' @param county_name Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").
+#' @param town_name Character vector. Town/district names with county included 
+#'   (e.g., "新竹市東區", "桃園市桃園區").
+#' @param village_name Character vector. Village names with full address 
+#'   (e.g., "新竹市東區三民里", "桃園市桃園區文中里").
+#' @param candidate Character vector. The name(s) of the candidate(s) to filter by.
+#' @param party Character vector. The political party/parties to filter by.
 #'
 #' @return A tibble containing recall election results with the following columns:
 #' \describe{
@@ -48,30 +46,34 @@
 #' # Get all 2025 recall data
 #' tv_get_recall(year = 2025)
 #' 
+#' # Get data for a specific county
+#' tv_get_recall(year = 2025, county_name = "新竹市")
+#' 
+#' # Get data for a specific town
+#' tv_get_recall(year = 2025, town_name = "新竹市東區")
+#' 
+#' # Get data for a specific village
+#' tv_get_recall(year = 2025, village_name = "新竹市東區三民里")
+#' 
 #' # Get data for a specific candidate
 #' tv_get_recall(year = 2025, candidate = "馬文君")
 #' 
 #' # Get data for a specific party
 #' tv_get_recall(year = 2025, party = "中國國民黨")
 #' 
-#' # Get data for a specific county
-#' tv_get_recall(year = 2025, level = "county", area_name = "新竹市")
-#' 
-#' # Get data for a specific town (both formats supported)
-#' tv_get_recall(year = 2025, level = "town", area_name = "新竹市東區")
-#' tv_get_recall(year = 2025, level = "town", area_name = "東區")  # Less specific
-#' 
-#' # Get data for a specific village (both formats supported)
-#' tv_get_recall(year = 2025, level = "village", area_name = "新竹市東區三民里")
-#' tv_get_recall(year = 2025, level = "village", area_name = "三民里")  # Less specific
+#' # Combine filters
+#' tv_get_recall(year = 2025, county_name = "新竹市", party = "中國國民黨")
 #' }
 #'
 #' @export
+#' @importFrom rlang .data
+#' @importFrom dplyr filter bind_rows arrange
 tv_get_recall <- function(year = NULL, 
                          office = "legislator", 
                          sub_type = "regional",
-                         level = "all",
-                         area_name = NULL,
+                         county_name = NULL,
+                         town_name = NULL,
+                         village_name = NULL,
                          candidate = NULL,
                          party = NULL) {
   
@@ -90,11 +92,6 @@ tv_get_recall <- function(year = NULL,
   
   if (sub_type != "regional") {
     stop("Currently only 'regional' sub_type is supported")
-  }
-  
-  valid_levels <- c("all", "county", "town", "village", "polling_station")
-  if (!level %in% valid_levels) {
-    stop("level must be one of: ", paste(valid_levels, collapse = ", "))
   }
   
   # Load data for each year
@@ -124,134 +121,115 @@ tv_get_recall <- function(year = NULL,
     result <- dplyr::filter(result, .data$party %in% party)
   }
   
-  # Filter by area based on level
-  if (!is.null(area_name)) {
-    if (level == "county") {
-      result <- dplyr::filter(result, .data$county %in% area_name)
-    } else if (level == "town") {
-      # Support both "東區" and "新竹市東區" formats
-      parsed_areas <- sapply(area_name, function(area) {
-        if (grepl("縣|市", area) && !grepl("^(縣|市)", area)) {
-          # Contains county/city name, extract town part
-          # e.g., "新竹市東區" -> "東區"
-          parts <- strsplit(area, "(縣|市)", perl = TRUE)[[1]]
-          if (length(parts) >= 2) {
-            return(parts[2])
+  # Filter by county
+  if (!is.null(county_name)) {
+    result <- dplyr::filter(result, .data$county %in% county_name)
+  }
+  
+  # Filter by town (requires full format like "新竹市東區")
+  if (!is.null(town_name)) {
+    town_filters <- list()
+    
+    for (town in town_name) {
+      if (grepl("縣|市", town) && !grepl("^(縣|市)", town)) {
+        # Parse "新竹市東區" format
+        county_match <- regexpr("^[^縣市]+[縣市]", town, perl = TRUE)
+        if (county_match > 0) {
+          county_part <- regmatches(town, county_match)
+          town_part <- substring(town, nchar(county_part) + 1)
+          if (nchar(town_part) > 0) {
+            town_filters[[length(town_filters) + 1]] <- 
+              list(county = county_part, town = town_part)
           }
-        }
-        # Return as is for simple town names like "東區"
-        return(area)
-      })
-      
-      if (any(grepl("縣|市", area_name))) {
-        # If any area_name contains county/city, filter by both county and town
-        county_names <- sapply(area_name, function(area) {
-          if (grepl("縣|市", area)) {
-            parts <- strsplit(area, "(縣|市)", perl = TRUE)[[1]]
-            if (length(parts) >= 1) {
-              # Reconstruct county name with 縣/市
-              county_part <- parts[1]
-              if (grepl("縣", area)) {
-                return(paste0(county_part, "縣"))
-              } else {
-                return(paste0(county_part, "市"))
-              }
-            }
-          }
-          return(NA)
-        })
-        
-        # Filter by matching county-town combinations
-        valid_combinations <- data.frame(
-          county = county_names[!is.na(county_names)],
-          town = parsed_areas[!is.na(county_names)],
-          stringsAsFactors = FALSE
-        )
-        
-        if (nrow(valid_combinations) > 0) {
-          filter_condition <- FALSE
-          for (i in 1:nrow(valid_combinations)) {
-            filter_condition <- filter_condition | 
-              (.data$county == valid_combinations$county[i] & 
-               .data$town == valid_combinations$town[i])
-          }
-          result <- dplyr::filter(result, !!filter_condition)
         }
       } else {
-        # Simple town name filtering
-        result <- dplyr::filter(result, .data$town %in% parsed_areas)
+        stop("town_name must include county/city name (e.g., '新竹市東區')")
       }
-    } else if (level == "village") {
-      # Support both "三民里" and "新竹市東區三民里" formats
-      parsed_areas <- sapply(area_name, function(area) {
-        # Extract village name from full address
-        if (grepl("里$", area)) {
-          # Find the village part (last part ending with 里)
-          parts <- strsplit(area, "(縣|市|鎮|鄉|區)", perl = TRUE)[[1]]
-          village_part <- parts[length(parts)]
-          if (nchar(village_part) > 0) {
-            return(village_part)
-          }
+    }
+    
+    # Apply town filters
+    if (length(town_filters) > 0) {
+      if (length(town_filters) == 1) {
+        tf <- town_filters[[1]]
+        result <- dplyr::filter(result, .data$county == !!tf$county & .data$town == !!tf$town)
+      } else {
+        filtered_results <- list()
+        for (tf in town_filters) {
+          filtered_results[[length(filtered_results) + 1]] <- 
+            dplyr::filter(result, .data$county == !!tf$county & .data$town == !!tf$town)
         }
-        return(area)
-      })
-      
-      if (any(grepl("縣|市", area_name))) {
-        # Parse full address: county + town + village
-        parsed_full <- lapply(area_name, function(area) {
-          if (grepl("縣|市", area)) {
-            # Parse "新竹市東區三民里" format
-            county_match <- regexpr("^[^縣市]+[縣市]", area, perl = TRUE)
-            if (county_match > 0) {
-              county <- substring(area, 1, attr(county_match, "match.length"))
-              remaining <- substring(area, attr(county_match, "match.length") + 1)
-              
-              # Extract town (everything before the village)
-              village_match <- regexpr("[^鎮鄉區]+里$", remaining, perl = TRUE)
-              if (village_match > 0) {
-                village <- substring(remaining, village_match)
-                town <- substring(remaining, 1, village_match - 1)
-                if (nchar(town) > 0) {
-                  return(list(county = county, town = town, village = village))
-                }
-              }
+        result <- do.call(dplyr::bind_rows, filtered_results)
+      }
+    }
+  }
+  
+  # Filter by village (requires full format like "新竹市東區三民里")
+  if (!is.null(village_name)) {
+    village_filters <- list()
+    
+    for (village in village_name) {
+      if (grepl("縣|市", village)) {
+        # Parse "新竹市東區三民里" format
+        county_match <- regexpr("^[^縣市]+[縣市]", village, perl = TRUE)
+        if (county_match > 0) {
+          county_part <- regmatches(village, county_match)
+          remaining <- substring(village, nchar(county_part) + 1)
+          
+          # Simple pattern matching for common administrative divisions
+          town_part <- ""
+          village_part <- ""
+          
+          if (grepl("區.*里$", remaining)) {
+            matches <- regmatches(remaining, regexec("^(.+區)(.+里)$", remaining, perl = TRUE))[[1]]
+            if (length(matches) == 3) {
+              town_part <- matches[2]
+              village_part <- matches[3]
+            }
+          } else if (grepl("鎮.*里$", remaining)) {
+            matches <- regmatches(remaining, regexec("^(.+鎮)(.+里)$", remaining, perl = TRUE))[[1]]
+            if (length(matches) == 3) {
+              town_part <- matches[2]
+              village_part <- matches[3]
+            }
+          } else if (grepl("鄉.*里$", remaining)) {
+            matches <- regmatches(remaining, regexec("^(.+鄉)(.+里)$", remaining, perl = TRUE))[[1]]
+            if (length(matches) == 3) {
+              town_part <- matches[2]
+              village_part <- matches[3]
             }
           }
-          return(NULL)
-        })
-        
-        # Filter by matching county-town-village combinations
-        valid_combinations <- do.call(rbind, lapply(parsed_full, function(x) {
-          if (!is.null(x)) {
-            data.frame(county = x$county, town = x$town, village = x$village, stringsAsFactors = FALSE)
+          
+          if (nchar(town_part) > 0 && nchar(village_part) > 0) {
+            village_filters[[length(village_filters) + 1]] <- 
+              list(county = county_part, town = town_part, village = village_part)
           } else {
-            NULL
+            stop("Failed to parse town and village from village_name: ", village)
           }
-        }))
-        
-        if (!is.null(valid_combinations) && nrow(valid_combinations) > 0) {
-          filter_condition <- FALSE
-          for (i in 1:nrow(valid_combinations)) {
-            filter_condition <- filter_condition | 
-              (.data$county == valid_combinations$county[i] & 
-               .data$town == valid_combinations$town[i] &
-               .data$village == valid_combinations$village[i])
-          }
-          result <- dplyr::filter(result, !!filter_condition)
         }
       } else {
-        # Simple village name filtering
-        result <- dplyr::filter(result, .data$village %in% parsed_areas)
+        stop("village_name must include full address (e.g., '新竹市東區三民里')")
       }
-    } else if (level == "polling_station") {
-      result <- dplyr::filter(result, .data$polling_station_id %in% area_name)
-    } else if (level == "all") {
-      # When level is "all", try to match area_name against county, town, or village
-      result <- dplyr::filter(result, 
-        .data$county %in% area_name | 
-        .data$town %in% area_name | 
-        .data$village %in% area_name
-      )
+    }
+    
+    # Apply village filters
+    if (length(village_filters) > 0) {
+      if (length(village_filters) == 1) {
+        vf <- village_filters[[1]]
+        result <- dplyr::filter(result, 
+          .data$county == !!vf$county & 
+          .data$town == !!vf$town & 
+          .data$village == !!vf$village)
+      } else {
+        filtered_results <- list()
+        for (vf in village_filters) {
+          filtered_results[[length(filtered_results) + 1]] <- 
+            dplyr::filter(result, 
+              .data$county == !!vf$county & 
+              .data$town == !!vf$town & 
+              .data$village == !!vf$village)
+        }
+        result <- do.call(dplyr::bind_rows, filtered_results)
+      }
     }
   }
   

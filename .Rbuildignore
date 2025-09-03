@@ -1,4 +1,9 @@
-^TaiwanVote\.Rproj$
+^data-raw$
+^README2.md$
+^test.R$
+^00_remove_package.R$
+^.Rproj.user$
+^.git$
+^.gitignore$
+^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE\.md$
-^README\.Rmd$

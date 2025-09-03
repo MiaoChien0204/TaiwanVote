@@ -86,12 +86,10 @@ tv_list_available_candidates <- function(year = NULL, office = NULL) {
     
     # Extract unique candidates with their info
     candidates <- data %>%
-      dplyr::select(.data$year, .data$office, .data$candidate_name, .data$party, .data$county) %>%
+      dplyr::select("year", "office", "candidate_name", "party", "county") %>%
       dplyr::distinct() %>%
       dplyr::mutate(
-        dplyr::mutate(
         electoral_district = paste0(.data$county, "選舉區")
-      )
       )
     
     candidates_list[[i]] <- candidates
@@ -219,7 +217,7 @@ tv_list_available_areas <- function(year = NULL, office = NULL, level = "county"
     # Extract areas based on level
     if (level == "county") {
       areas <- data %>%
-        dplyr::select(.data$year, .data$office, area_name = .data$county) %>%
+        dplyr::select("year", "office", area_name = "county") %>%
         dplyr::distinct() %>%
         dplyr::mutate(
           level = "county",
@@ -227,22 +225,22 @@ tv_list_available_areas <- function(year = NULL, office = NULL, level = "county"
         )
     } else if (level == "town") {
       areas <- data %>%
-        dplyr::select(.data$year, .data$office, .data$county, area_name = .data$town) %>%
+        dplyr::select("year", "office", "county", area_name = "town") %>%
         dplyr::distinct() %>%
         dplyr::mutate(
           level = "town",
           parent_area = .data$county
         ) %>%
-        dplyr::select(-.data$county)
+        dplyr::select(-"county")
     } else if (level == "village") {
       areas <- data %>%
-        dplyr::select(.data$year, .data$office, .data$town, area_name = .data$village) %>%
+        dplyr::select("year", "office", "town", area_name = "village") %>%
         dplyr::distinct() %>%
         dplyr::mutate(
           level = "village",
           parent_area = .data$town
         ) %>%
-        dplyr::select(-.data$town)
+        dplyr::select(-"town")
     }
     
     areas_list[[i]] <- areas
@@ -264,3 +262,5 @@ tv_list_available_areas <- function(year = NULL, office = NULL, level = "county"
   
   return(result)
 }
+#' @importFrom rlang .data  
+#' @importFrom dplyr filter distinct select group_by summarise n
