@@ -1,10 +1,17 @@
 Package: TaiwanVote
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Taiwan Election Database R Package
+Version: 1.0.0
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Miao", "Chien", email = "miao23641@gmail.com", role = c("aut", "cre"))
+Description: An R package for querying and processing Taiwan's election voting 
+    results. Currently provides tools for accessing 2025 Taiwan Legislative 
+    Recall Election polling station results. Users can query voting data by 
+    candidate names, administrative districts, villages, and various 
+    administrative levels, with support for data aggregation and analysis. 
+    Aims to become a comprehensive Taiwan election data query interface.
 License: MIT + file LICENSE
+URL: https://github.com/MiaoChien0204/TaiwanVote
+BugReports: https://github.com/MiaoChien0204/TaiwanVote/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

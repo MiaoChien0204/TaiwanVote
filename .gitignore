@@ -9,3 +9,5 @@
 /data-raw/release/
 
 *.Rmd
+test.R
+README2.md

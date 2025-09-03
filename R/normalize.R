@@ -3,7 +3,7 @@
 
 tv_norm_zh <- function(x) {
   x <- as.character(x)
-  x <- gsub("台", "臺", x, fixed = TRUE)
+  x <- gsub("\\u53f0", "\\u81fa", x, fixed = TRUE)
   x <- trimws(x)
   x
 }

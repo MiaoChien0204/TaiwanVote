@@ -2,10 +2,13 @@
 % Please edit documentation in R/data_source.R
 \name{tv_cache_clear}
 \alias{tv_cache_clear}
-\title{Clear cached recall data}
+\title{Clear cached data}
 \usage{
-tv_cache_clear()
+tv_cache_clear(file_name = NULL)
+}
+\arguments{
+\item{file_name}{Character. Specific file name to remove. If NULL, removes all cached files.}
 }
 \description{
-Remove the cached 2025_legislator_recall.csv file.
+Remove cached data files. If no file_name is specified, removes all cached files.
 }

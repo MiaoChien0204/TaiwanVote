@@ -3,20 +3,11 @@
 # Input : data-raw/raw/*.xlsx
 # Output: data-raw/release/2025_legislator_recall.csv
 
-
-# 行政區別	town	鄉鎮市區，例如「東區」
-# 村里別	village	村里名稱，例如「育賢里」
-# 投開票所別	precinct_id	投開票所代號（數字編號）
-# 同意罷免票數	agree	同意罷免票數
-# 不同意罷免票數	disagree	不同意罷免票數
-# 有效票數	total_valid	同意 + 不同意
-# 無效票數	invalid	作廢票
-# 投票人數	total_ballots	投出的票數（有效 + 無效）
-# 已領未投票數	not_voted_but_issued	已領票但沒投進票匭
-# 發出票數	issued_ballots	發出去的票數（投票人數 + 已領未投）
-# 用餘票數	unused_ballots	未發出的票數
-# 投票人總數	registered	投票權人數（發出+用餘）
-# 投票率 (%)	turnout_rate	投票率（投票人數 ÷ 投票人總數），轉為 0–1 小數
+# Output columns aligned with README2.md vision:
+# year, data_type, office, sub_type, county, town, village, polling_station_id,
+# candidate_name, party, votes, vote_percentage, is_recalled,
+# disagree, invalid, total_valid, total_ballots, not_voted_but_issued,
+# issued_ballots, unused_ballots, registered, turnout_rate
 
 
 
@@ -32,9 +23,20 @@ suppressPackageStartupMessages({
 })
 
 # ---- Paths ----
-in_dir  = "data-raw/raw"
+in_dir  = "data-raw/raw/2025_recall"
 out_dir = "data-raw/release"
 if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
+
+# ---- 2025 Recall Candidate-Party Mapping ----
+candidate_party_mapping = tibble(
+  candidate_name = c(
+    "馬文君", "游顥", "林沛祥", "羅明才", "廖先翔", "洪孟楷", "葉元之", "張智倫", "林德福",
+    "鄭正鈐", "林思銘", "牛煦庭", "涂權吉", "魯明哲", "萬美玲", "呂玉玲", "邱若華",
+    "顏寬恒", "楊瓊瓔", "廖偉翔", "黃健豪", "羅廷瑋", "江啟臣", "王鴻薇", "李彥秀",
+    "羅智強", "徐巧芯", "賴士葆", "黃建賓", "傅崐萁", "丁學忠"
+  ),
+  party = rep("中國國民黨", 31)
+)
 
 # ---- Helpers: convert to numeric / normalize Chinese ----
 to_num = function(x) {
@@ -51,7 +53,7 @@ norm_zh = function(x) {
     str_squish()
 }
 
-# ---- Infer county and candidate from filename ----
+# ---- Infer county, candidate and determine office/sub_type ----
 infer_county = function(fname) {
   m = str_match(fname, "(?<county>[\\p{Han}]{2,3}(市|縣))")[, "county"]
   ifelse(is.na(m), NA_character_, m)
@@ -60,6 +62,11 @@ infer_county = function(fname) {
 infer_candidate = function(fname) {
   m = str_match(fname, "([\\p{Han}]{2,5})罷免案")[, 2]
   ifelse(is.na(m), NA_character_, m)
+}
+
+determine_office_subtype = function(fname) {
+  # All 2025 recall are legislator/regional based on current data
+  list(office = "legislator", sub_type = "regional")
 }
 
 # ---- Clean one xlsx file ----
@@ -88,6 +95,7 @@ clean_one = function(file) {
 
   county    = infer_county(basename(file))
   candidate = infer_candidate(basename(file))
+  office_info = determine_office_subtype(basename(file))
 
   # If not detected from filename, leave NA (or manually set later if needed)
   if (is.na(county))    county    = NA_character_
@@ -96,11 +104,17 @@ clean_one = function(file) {
   df = raw %>%
     mutate(
       across(c(town, village), norm_zh),
-      county        = county,
-      candidate     = candidate,
-      level         = "village",
-      precinct_id   = as.character(precinct_id),
 
+      # Core identification columns (README2.md vision)
+      year = 2025,
+      data_type = "recall",
+      office = office_info$office,
+      sub_type = office_info$sub_type,
+      county = county,
+      candidate_name = candidate,
+      polling_station_id = as.character(precinct_id),
+
+      # Convert vote numbers
       agree               = to_num(agree),
       disagree            = to_num(disagree),
       total_valid         = to_num(total_valid),
@@ -118,27 +132,31 @@ clean_one = function(file) {
       village != "",
       !str_detect(village, "總\\s*計")
     ) %>%
-    # If turnout_rate is NA, calculate; convert to 0-1 scale
+    # Calculate derived columns (README2.md vision)
     mutate(
       turnout_rate = ifelse(
         is.na(turnout_rate_pct),
         total_ballots / registered,
         turnout_rate_pct / 100
       ),
-      agree_rate    = ifelse(total_valid > 0, agree/total_valid, NA_real_),
-      disagree_rate = ifelse(total_valid > 0, disagree/total_valid, NA_real_)
+      votes = agree,  # Main vote count for recall (agree votes)
+      vote_percentage = ifelse(total_valid > 0, agree/total_valid, NA_real_),
+      is_recalled = agree > disagree  # Boolean: recall successful
     ) %>%
+    # Join with party information
+    left_join(candidate_party_mapping, by = "candidate_name") %>%
     select(
-      candidate, level,
-      county, town, village, precinct_id,
-      agree, disagree, invalid, total_valid,
-      total_ballots, not_voted_but_issued, issued_ballots, unused_ballots, registered,
-      agree_rate, disagree_rate, turnout_rate
+      # README2.md vision column order
+      year, data_type, office, sub_type, county, town, village, polling_station_id,
+      candidate_name, party, votes, vote_percentage, is_recalled,
+      # Additional recall-specific columns
+      disagree, invalid, total_valid, total_ballots, not_voted_but_issued,
+      issued_ballots, unused_ballots, registered, turnout_rate
     )
 
   # ---- Basic validation ----
-  if (!all(df$total_valid == df$agree + df$disagree, na.rm = TRUE)) {
-    cli_warn("Validation: total_valid != agree + disagree")
+  if (!all(df$total_valid == df$votes + df$disagree, na.rm = TRUE)) {
+    cli_warn("Validation: total_valid != votes + disagree")
   }
   if (!all(df$total_ballots == df$total_valid + df$invalid, na.rm = TRUE)) {
     cli_warn("Validation: total_ballots != total_valid + invalid")
