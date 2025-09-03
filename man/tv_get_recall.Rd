@@ -22,9 +22,13 @@ tv_get_recall(
 \item{sub_type}{Character. The sub-type of election. Currently supports: "regional".}
 
 \item{level}{Character. The administrative level for filtering. Options:
-"all" (default), "county", "town", "village", "polling_station".}
+"all" (default), "county", "town", "village", "polling_station".
+When "all" is used with area_name, it will search across all administrative levels.}
 
-\item{area_name}{Character. The name of the area to filter by. Used with \code{level}.}
+\item{area_name}{Character. The name of the area to filter by. Supports both
+simple names (e.g., "東區", "三民里") and full administrative names
+(e.g., "新竹市東區", "新竹市東區三民里"). When using full names, the function
+will automatically parse and match the appropriate administrative levels.}
 
 \item{candidate}{Character. The name of the candidate to filter by.}
 
@@ -73,10 +77,15 @@ tv_get_recall(year = 2025, candidate = "馬文君")
 tv_get_recall(year = 2025, party = "中國國民黨")
 
 # Get data for a specific county
-tv_get_recall(year = 2025, level = "county", area_name = "南投縣")
+tv_get_recall(year = 2025, level = "county", area_name = "新竹市")
 
-# Get data for a specific town
-tv_get_recall(year = 2025, level = "town", area_name = "草屯鎮")
+# Get data for a specific town (both formats supported)
+tv_get_recall(year = 2025, level = "town", area_name = "新竹市東區")
+tv_get_recall(year = 2025, level = "town", area_name = "東區")  # Less specific
+
+# Get data for a specific village (both formats supported)
+tv_get_recall(year = 2025, level = "village", area_name = "新竹市東區三民里")
+tv_get_recall(year = 2025, level = "village", area_name = "三民里")  # Less specific
 }
 
 }

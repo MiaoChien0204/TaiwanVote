@@ -20,12 +20,12 @@
 #' @export
 tv_list_available_recalls <- function() {
   
-  # Currently available recall elections
+    # Currently available recall elections
   recalls <- tibble::tibble(
     year = c(2025),
     office = c("legislator"),
     sub_type = c("regional"),
-    description = c("2025 \\u7acb\\u6cd5\\u59d4\\u54e1\\u7f77\\u514d\\u6848 (\\u5340\\u57df\\u7acb\\u59d4)")
+    description = c("2025 立法委員罷免案 (區域立委)")
   )
   
   return(recalls)
@@ -89,7 +89,9 @@ tv_list_available_candidates <- function(year = NULL, office = NULL) {
       dplyr::select(.data$year, .data$office, .data$candidate_name, .data$party, .data$county) %>%
       dplyr::distinct() %>%
       dplyr::mutate(
-        electoral_district = paste0(.data$county, "\\u9078\\u8209\\u5340")
+        dplyr::mutate(
+        electoral_district = paste0(.data$county, "選舉區")
+      )
       )
     
     candidates_list[[i]] <- candidates
