@@ -1,4 +1,17 @@
+---
+output: github_document
+---
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # TaiwanVote: Taiwan Election Database R Package \| 臺灣選舉資料庫 R 語言套件
 
@@ -8,7 +21,7 @@
 
 ## Package Overview \| 套件總覽
 
-**TaiwanVote** is an R package designed for querying and processing Taiwan’s election voting results. Currently, it provides tools for accessing and analyzing **2025 Taiwan Legislative Recall Election** polling station results. Users can query voting data by candidate names, administrative districts, villages, and various administrative levels, with support for data aggregation and analysis.
+**TaiwanVote** is an R package designed for querying and processing Taiwan's election voting results. Currently, it provides tools for accessing and analyzing **2025 Taiwan Legislative Recall Election** polling station results. Users can query voting data by candidate names, administrative districts, villages, and various administrative levels, with support for data aggregation and analysis.
 
 **Ultimate Goal:** TaiwanVote aims to become a **comprehensive Taiwan election data query interface**, expanding beyond recall elections to cover detailed historical data of all central and local public official elections, providing standardized and user-friendly interfaces for researchers and citizens.
 
@@ -74,7 +87,7 @@ You can install the development version of TaiwanVote from GitHub using `devtool
 
 您可以使用 `devtools` 從 GitHub 安裝 `TaiwanVote` 套件：
 
-``` r
+```{r eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("MiaoChien0204/TaiwanVote")
 ```
@@ -83,13 +96,13 @@ devtools::install_github("MiaoChien0204/TaiwanVote")
 
 ### Load Package \| 載入套件
 
-``` r
+```{r example}
 library(TaiwanVote)
 ```
 
 ### View Available Data \| 查看可用資料
 
-``` r
+```{r eval=FALSE}
 # View available recall election data | 查看可用的罷免案資料
 tv_list_available_recalls()
 
@@ -107,7 +120,7 @@ tv_list_available_areas(level = "county")
 
 #### 1. Get All 2025 Recall Election Data \| 取得所有 2025 年罷免案資料
 
-``` r
+```{r eval=FALSE}
 # Complete village-level data | 村里層級的完整資料
 all_village_data <- tv_get_recall(year = 2025)
 head(all_village_data)
@@ -119,7 +132,7 @@ head(all_county_data)
 
 #### 2. Query by Candidate \| 按候選人查詢
 
-``` r
+```{r eval=FALSE}
 # Query specific candidate's recall election results | 查詢特定候選人的罷免案結果
 zheng_data <- tv_get_recall(year = 2025, candidate = "鄭正鈐")
 head(zheng_data)
@@ -131,7 +144,7 @@ head(zheng_county)
 
 #### 3. Query by Party \| 按政黨查詢
 
-``` r
+```{r eval=FALSE}
 # Query recall results for specific party candidates | 查詢特定政黨候選人的罷免案結果
 kmt_data <- tv_get_recall(year = 2025, party = "中國國民黨")
 head(kmt_data)
@@ -139,7 +152,7 @@ head(kmt_data)
 
 #### 4. Query by Region \| 按地區查詢
 
-``` r
+```{r eval=FALSE}
 # Query results for specific county/city | 查詢特定縣市的罷免案結果
 hsinchu_data <- tv_get_recall(year = 2025, county_name = "新竹市")
 head(hsinchu_data)
@@ -155,7 +168,7 @@ head(village_data1)
 
 #### 5. Combined Queries \| 組合查詢
 
-``` r
+```{r eval=FALSE}
 # Detailed results for specific candidate in specific region | 特定候選人在特定地區的詳細結果
 detailed_data <- tv_get_recall(
   year = 2025, 
@@ -189,7 +202,7 @@ Future unified but separated data retrieval functions will be provided:
 
 未來將提供統一但分離的資料擷取函數：
 
-``` r
+```{r eval=FALSE}
 # Election data query (planned) | 選舉資料查詢 (計劃中)
 tv_get_election(
   year = 2024,          # Election year | 選舉年份
@@ -227,7 +240,7 @@ All functions return data with unified field design:
 所有函式回傳的資料都採用統一的欄位設計：
 
 -   `year` (Year 年份)
--   `data_type` (Data type: “election” or “recall” 資料類型)
+-   `data_type` (Data type: "election" or "recall" 資料類型)
 -   `office` (Office 職務)
 -   `sub_type` (Office subtype 職務子類型)
 -   `county`, `town`, `village` (Administrative divisions 行政區劃)
@@ -318,10 +331,10 @@ For bug reports, feature requests, or contributions, please visit our [GitHub Is
 
 ## About \| 關於
 
-**TaiwanVote** aims to provide a convenient and standardized interface for accessing and analyzing Taiwan’s election data. We believe that open and accessible data can promote deeper academic research, informed journalism, and enhanced civic participation in Taiwan’s democratic processes.
+**TaiwanVote** aims to provide a convenient and standardized interface for accessing and analyzing Taiwan's election data. We believe that open and accessible data can promote deeper academic research, informed journalism, and enhanced civic participation in Taiwan's democratic processes.
 
 `TaiwanVote` 套件旨在提供一個便捷且標準化的介面，幫助使用者快速獲取和分析臺灣的選舉數據。我們相信透過開放且易於取用的資料，能夠促進更深入的學術研究、新聞報導以及公民參與。
 
 ------------------------------------------------------------------------
 
-*Built with ❤️ for Taiwan’s democracy \| 為臺灣民主而建*
+*Built with ❤️ for Taiwan's democracy \| 為臺灣民主而建*
