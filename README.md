@@ -167,13 +167,21 @@ head(kmt_data)
 #### 4. Query by Region \| 按地區查詢
 
 ``` r
-# Query recall results for specific county/city | 查詢特定縣市的罷免案結果
+# Query results for specific county/city | 查詢特定縣市的罷免案結果
 hsinchu_data <- tv_get_recall(year = 2025, area_name = "新竹市")
 head(hsinchu_data)
 
 # Query results for specific township/district | 查詢特定鄉鎮市區的結果
-dongqu_data <- tv_get_recall(year = 2025, area_name = "東區", level = "town")
-head(dongqu_data)
+# Both formats are supported | 支援兩種格式
+dongqu_data1 <- tv_get_recall(year = 2025, area_name = "新竹市東區", level = "town")
+dongqu_data2 <- tv_get_recall(year = 2025, area_name = "東區", level = "town")  # Less specific
+head(dongqu_data1)
+
+# Query results for specific village | 查詢特定村里的結果
+# Both formats are supported | 支援兩種格式
+village_data1 <- tv_get_recall(year = 2025, area_name = "新竹市東區三民里", level = "village")
+village_data2 <- tv_get_recall(year = 2025, area_name = "三民里", level = "village")  # Less specific
+head(village_data1)
 ```
 
 #### 5. Combined Queries \| 組合查詢
@@ -183,10 +191,27 @@ head(dongqu_data)
 detailed_data <- tv_get_recall(
   year = 2025, 
   candidate = "鄭正鈐", 
-  area_name = "新竹市",
-  level = "village"
+  area_name = "新竹市"
 )
 head(detailed_data)
+
+# More specific: candidate in specific district | 更具體：特定候選人在特定區的結果
+district_data <- tv_get_recall(
+  year = 2025, 
+  candidate = "鄭正鈐", 
+  area_name = "新竹市東區", 
+  level = "town"
+)
+head(district_data)
+
+# Most specific: candidate in specific village | 最具體：特定候選人在特定村里的結果
+village_detail <- tv_get_recall(
+  year = 2025, 
+  candidate = "鄭正鈐", 
+  area_name = "新竹市東區三民里", 
+  level = "village"
+)
+head(village_detail)
 ```
 
 ## 🔮 Ultimate Vision Design \| 終極願景設計

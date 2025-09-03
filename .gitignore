@@ -8,6 +8,6 @@
 /data-raw/raw/
 /data-raw/release/
 
-*.Rmd
+README.Rmd
 test.R
 README2.md
