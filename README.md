@@ -1,7 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# TaiwanVote: Taiwan Election Database R Package \| 臺灣選舉資料庫 R 語言套件
+# TaiwanVote
+
+## Taiwan Election Database R Package
+
+## 臺灣選舉資料庫 R 語言套件
 
 <!-- badges: start -->
 
@@ -236,75 +240,129 @@ tv_get_recall(
 
 #### **Core Parameters \| 核心參數:**
 
-|  |  |  |  |
-|----|----|----|----|
-| Parameter 參數 :=============== `year` | Description 描述 :====================================================== Election/Recall year 選舉/罷免年份 | Example Values 範例值 :============================================= `2024`, `2025` |  |
-|  |  |  |  |
-| `office` | Office type 職務類型 | `"president"` (總統) \| \| `"legislator"` (立法委員) \| \| `"mayor"` (縣市長) \| \| `"councilor"` (縣市議員) \| \| `"indigenous_district_chief"` (原住民區長) \| \| `"indigenous_district_representative"` (原住民區民代表) \| `"township_mayor"` (鄉鎮市長) \| \| `"township_representative"` (鄉鎮市民代表) \| \| `"village_chief"` (村里長) \| |  |
-| `sub_type` | Office subtype 職務子類型 | `"regional"` (區域), `"indigenous"` (原住民), \`“at_larg |  |
-| `county_name` | County/City name 縣市名稱 | `"新竹市"`, `"桃園市"` |  |
-| `town_name` | Town/District name with county 鄉鎮市區名稱（含縣市） | `"新竹市東區"`, `"桃園市桃園區"` |  |
-| `village_name` | Village name with full address 村里名稱（含完整地址） | `"新竹市東區三民里"`, `"桃園市桃園區文中里"` |  |
-| `candidate` | Candidate name 候選人姓名 | `"鄭正鈐"`, `"蔡英文"` |  |
-| `party` | Party name 政黨名稱 | `"中國國民黨"`, `"民主進步黨"` |  |
+<table style="width:99%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 38%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parameter 參數</th>
+<th>Description 描述</th>
+<th>Example Values 範例值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>year</code></td>
+<td>Election/Recall year 選舉/罷免年份</td>
+<td><code>2024</code>, <code>2025</code></td>
+</tr>
+<tr>
+<td><code>office</code></td>
+<td>Office type 職務類型</td>
+<td><p><code>"president"</code> (總統)</p>
+<p><code>"legislator"</code> (立法委員)</p>
+<p><code>"mayor"</code> (縣市長)</p>
+<p><code>"councilor"</code> (縣市議員)</p>
+<p><code>"indigenous_district_chief"</code> (原住民區長)</p>
+<p><code>"indigenous_district_representative"</code>
+(原住民區民代表)</p>
+<p><code>"township_mayor"</code> (鄉鎮市長)</p>
+<p><code>"township_representative"</code> (鄉鎮市民代表)</p>
+<p><code>"village_chief"</code> (村里長)</p></td>
+</tr>
+<tr>
+<td><code>sub_type</code></td>
+<td>Office subtype 職務子類型</td>
+<td><code>"regional"</code> (區域), <code>"indigenous"</code> (原住民),
+<code>"at_large"</code> (不分區)</td>
+</tr>
+<tr>
+<td><code>county_name</code></td>
+<td>County/City name 縣市名稱</td>
+<td><code>"新竹市"</code>, <code>"桃園市"</code></td>
+</tr>
+<tr>
+<td><code>town_name</code></td>
+<td>Town/District name with county 鄉鎮市區名稱（含縣市）</td>
+<td><code>"新竹市東區"</code>, <code>"桃園市桃園區"</code></td>
+</tr>
+<tr>
+<td><code>village_name</code></td>
+<td>Village name with full address 村里名稱（含完整地址）</td>
+<td><code>"新竹市東區三民里"</code>,
+<code>"桃園市桃園區文中里"</code></td>
+</tr>
+<tr>
+<td><code>candidate</code></td>
+<td>Candidate name 候選人姓名</td>
+<td><code>"鄭正鈐"</code>, <code>"蔡英文"</code></td>
+</tr>
+<tr>
+<td><code>party</code></td>
+<td>Party name 政黨名稱</td>
+<td><code>"中國國民黨"</code>, <code>"民主進步黨"</code></td>
+</tr>
+</tbody>
+</table>
 
 #### Office 與 sub_type 對照表
 
-<table style="width:99%;">
+<table>
 <colgroup>
-<col style="width: 56%" />
-<col style="width: 18%" />
-<col style="width: 23%" />
+<col style="width: 59%" />
+<col style="width: 40%" />
 </colgroup>
+<thead>
+<tr>
+<th>office</th>
+<th>sub_type</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td rowspan="2"><h1 id="office">office</h1>
-<p><code>"president"</code> (總統)</p></td>
-<td rowspan="2"><h1 id="sub_type">sub_type</h1></td>
-<td></td>
-</tr>
-<tr>
+<td><code>"president"</code> (總統)</td>
 <td></td>
 </tr>
 <tr>
 <td><code>"legislator"</code> (立法委員)</td>
-<td colspan="2"><code>"regional"</code> (區域) | |
-<code>"at_large"</code> (不分區) | | <code>"indigenous_lowland"</code>
-(平地原住 | <code>"indigenous_highland"</code> (山地原住</td>
+<td><p><code>"regional"</code> (區域)</p>
+<p><code>"at_large"</code> (不分區)</p>
+<p><code>"indigenous_lowland"</code> (平地原住民)</p>
+<p><code>"indigenous_highland"</code> (山地原住民)</p></td>
 </tr>
 <tr>
 <td><code>"mayor"</code> (縣市長)</td>
 <td></td>
-<td></td>
 </tr>
 <tr>
 <td><code>"councilor"</code> (縣市議員)</td>
-<td colspan="2"><code>"regional"</code> (區域) | |
-<code>"indigenous_lowland"</code> (平地原住 |
-<code>"indigenous_highland"</code> (山地原住</td>
+<td><p><code>"regional"</code> (區域)</p>
+<p><code>"indigenous_lowland"</code> (平地原住民)</p>
+<p><code>"indigenous_highland"</code> (山地原住民)</p></td>
 </tr>
 <tr>
 <td><code>"indigenous_district_chief"</code> (原住民區長)</td>
 <td></td>
-<td></td>
 </tr>
 <tr>
-<td colspan="3"><code>"indigenous_district_representative"</code>
-(原住民區民代表) | |</td>
+<td><code>"indigenous_district_representative"</code>
+(原住民區民代表)</td>
+<td></td>
 </tr>
 <tr>
 <td><code>"township_mayor"</code> (鄉鎮市長)</td>
 <td></td>
-<td></td>
 </tr>
 <tr>
 <td><code>"township_representative"</code> (鄉鎮市民代表)</td>
-<td colspan="2"><code>"regional"</code> (區域) | |
-<code>"indigenous"</code> (原住民) |</td>
+<td><p><code>"regional"</code> (區域)</p>
+<p><code>"indigenous"</code> (原住民)</p></td>
 </tr>
 <tr>
 <td><code>"village_chief"</code> (村里長)</td>
-<td></td>
 <td></td>
 </tr>
 </tbody>
