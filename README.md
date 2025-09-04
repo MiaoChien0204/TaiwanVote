@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # TaiwanVote: Taiwan Election Database R Package \| 臺灣選舉資料庫 R 語言套件
@@ -8,13 +9,25 @@
 
 ## Package Overview \| 套件總覽
 
-**TaiwanVote** is an R package designed for querying and processing Taiwan’s election voting results. Currently, it provides tools for accessing and analyzing **2025 Taiwan Legislative Recall Election** polling station results. Users can query voting data by candidate names, administrative districts, villages, and various administrative levels, with support for data aggregation and analysis.
+**TaiwanVote** is an R package designed for querying and processing
+Taiwan’s election voting results. Currently, it provides tools for
+accessing and analyzing **2025 Taiwan Legislative Recall Election**
+polling station results. Users can query voting data by candidate names,
+administrative districts, villages, and various administrative levels,
+with support for data aggregation and analysis.
 
-**Ultimate Goal:** TaiwanVote aims to become a **comprehensive Taiwan election data query interface**, expanding beyond recall elections to cover detailed historical data of all central and local public official elections, providing standardized and user-friendly interfaces for researchers and citizens.
+**Ultimate Goal:** TaiwanVote aims to become a **comprehensive Taiwan
+election data query interface**, expanding beyond recall elections to
+cover detailed historical data of all central and local public official
+elections, providing standardized and user-friendly interfaces for
+researchers and citizens.
 
-`TaiwanVote` 是一個專為查詢與處理臺灣選舉投票結果而設計的 R 語言套件。目前已提供了 **2025 年臺灣立法委員罷免案**各投開票所的開票結果查詢與資料處理工具。使用者可以依據候選人姓名、行政區、村里等不同層級來查詢投票結果，並支援資料的彙整與分析。
+`TaiwanVote` 是一個專為查詢與處理臺灣選舉投票結果而設計的 R
+語言套件。目前已提供了 **2025
+年臺灣立法委員罷免案**各投開票所的開票結果查詢與資料處理工具。使用者可以依據候選人姓名、行政區、村里等不同層級來查詢投票結果，並支援資料的彙整與分析。
 
-**終極目標：** `TaiwanVote` 旨在成為一個**全面的臺灣選舉資料查詢介面**，不僅限於罷免案，更將擴展至涵蓋歷年來所有中央與地方公職人員選舉的詳盡數據，並提供標準化、易於使用的介面供研究者和公民取用。
+**終極目標：** `TaiwanVote`
+旨在成為一個**全面的臺灣選舉資料查詢介面**，不僅限於罷免案，更將擴展至涵蓋歷年來所有中央與地方公職人員選舉的詳盡數據，並提供標準化、易於使用的介面供研究者和公民取用。
 
 ## 🚧 Development Progress \| 開發進度
 
@@ -22,55 +35,69 @@
 
 #### **2025 Legislative Recall Election \| 2025 年立法委員罷免案**
 
--   ✅ **Core Function**: `tv_get_recall()` - Unified recall election query interface
--   ✅ **核心函式**: 統一的罷免案查詢介面
--   ✅ **Multi-dimensional Queries**: Support queries by year, candidate, party, and region
--   ✅ **多維度查詢**: 支援按年份、候選人、政黨、地區查詢
--   ✅ **Multi-level Data**: Support village, township, and county-level data aggregation
--   ✅ **多層級資料**: 支援村里級、鄉鎮級、縣市級資料聚合
--   ✅ **Standardized Format**: Unified field design aligned with ultimate vision
--   ✅ **標準化格式**: 符合終極願景的統一欄位設計
--   ✅ **Helper Functions**: `tv_list_available_recalls()`, `tv_list_available_candidates()`, etc.
--   ✅ **輔助函式**: 等輔助查詢功能
--   ✅ **Complete Data**: Village-level voting results for all 31 legislators nationwide
--   ✅ **完整資料**: 涵蓋全台 31 位立委的村里級投票結果
+- ✅ **Core Function**: `tv_get_recall()` - Unified recall election
+  query interface
+- ✅ **核心函式**: 統一的罷免案查詢介面
+- ✅ **Multi-dimensional Queries**: Support queries by year, candidate,
+  party, and region
+- ✅ **多維度查詢**: 支援按年份、候選人、政黨、地區查詢
+- ✅ **Multi-level Data**: Support village, township, and county-level
+  data aggregation
+- ✅ **多層級資料**: 支援村里級、鄉鎮級、縣市級資料聚合
+- ✅ **Standardized Format**: Unified field design aligned with ultimate
+  vision
+- ✅ **標準化格式**: 符合終極願景的統一欄位設計
+- ✅ **Helper Functions**: `tv_list_available_recalls()`,
+  `tv_list_available_candidates()`, etc.
+- ✅ **輔助函式**: 等輔助查詢功能
+- ✅ **Complete Data**: Village-level voting results for all 31
+  legislators nationwide
+- ✅ **完整資料**: 涵蓋全台 31 位立委的村里級投票結果
 
 #### **Data Infrastructure \| 資料基礎建設**
 
--   ✅ **Standardized Fields**: Unified data field design (`year`, `data_type`, `office`, etc.)
--   ✅ **標準化欄位**: 實作統一的資料欄位設計
--   ✅ **File Naming Convention**: Adopts `{year}_{office}_recall.csv` format
--   ✅ **檔案命名規範**: 採用標準格式
--   ✅ **Caching Mechanism**: Automatic download and local cache management
--   ✅ **快取機制**: 自動下載與本地快取管理
+- ✅ **Standardized Fields**: Unified data field design (`year`,
+  `data_type`, `office`, etc.)
+- ✅ **標準化欄位**: 實作統一的資料欄位設計
+- ✅ **File Naming Convention**: Adopts `{year}_{office}_recall.csv`
+  format
+- ✅ **檔案命名規範**: 採用標準格式
+- ✅ **Caching Mechanism**: Automatic download and local cache
+  management
+- ✅ **快取機制**: 自動下載與本地快取管理
 
 ### 🔄 In Development \| 開發中功能
 
 #### **Election Data Expansion \| 選舉資料擴展**
 
--   🔄 **`tv_get_election()` Function**: Unified election data query interface
--   🔄 **函式**: 統一的選舉資料查詢介面
--   🔄 **Historical Presidential Elections**: 2024, 2020, 2016 presidential election data
--   🔄 **歷年總統選舉**: 總統副總統選舉資料
--   🔄 **Legislative Elections**: 2024, 2020 legislative election data
--   🔄 **立法委員選舉**: 立法委員選舉資料
+- 🔄 **`tv_get_election()` Function**: Unified election data query
+  interface
+- 🔄 **函式**: 統一的選舉資料查詢介面
+- 🔄 **Historical Presidential Elections**: 2024, 2020, 2016
+  presidential election data
+- 🔄 **歷年總統選舉**: 總統副總統選舉資料
+- 🔄 **Legislative Elections**: 2024, 2020 legislative election data
+- 🔄 **立法委員選舉**: 立法委員選舉資料
 
 ### 📋 Planned Features \| 規劃中功能
 
 #### **Complete Election System \| 完整選舉體系**
 
--   📋 **Local Elections**: Mayor and councilor election data
--   📋 **地方選舉**: 縣市長、縣市議員選舉資料
--   📋 **Grassroots Elections**: Township mayor and village chief election data
--   📋 **基層選舉**: 鄉鎮市長、村里長選舉資料
--   📋 **Other Recall Elections**: Mayor and councilor recall election data
--   📋 **其他罷免案**: 縣市長、議員罷免案資料
--   📋 **Referendums**: Historical referendum data
--   📋 **公民投票**: 歷年公投案資料
+- 📋 **Local Elections**: Mayor and councilor election data
+- 📋 **地方選舉**: 縣市長、縣市議員選舉資料
+- 📋 **Grassroots Elections**: Township mayor and village chief election
+  data
+- 📋 **基層選舉**: 鄉鎮市長、村里長選舉資料
+- 📋 **Other Recall Elections**: Mayor and councilor recall election
+  data
+- 📋 **其他罷免案**: 縣市長、議員罷免案資料
+- 📋 **Referendums**: Historical referendum data
+- 📋 **公民投票**: 歷年公投案資料
 
 ## Installation \| 安裝
 
-You can install the development version of TaiwanVote from GitHub using `devtools`:
+You can install the development version of TaiwanVote from GitHub using
+`devtools`:
 
 您可以使用 `devtools` 從 GitHub 安裝 `TaiwanVote` 套件：
 
@@ -209,16 +236,79 @@ tv_get_recall(
 
 #### **Core Parameters \| 核心參數:**
 
-| Parameter 參數 | Description 描述 | Example Values 範例值 |
-|:---|:---|:---|
-| `year` | Election/Recall year 選舉/罷免年份 | `2024`, `2025` |
-| `office` | Office type 職務類型 | `"president"`, `"legislator"`, `"mayor"` |
-| `sub_type` | Office subtype 職務子類型 | `"regional"`, `"indigenous"`, `"at_large"` |
-| `county_name` | County/City name 縣市名稱 | `"新竹市"`, `"桃園市"` |
-| `town_name` | Town/District name with county 鄉鎮市區名稱（含縣市） | `"新竹市東區"`, `"桃園市桃園區"` |
-| `village_name` | Village name with full address 村里名稱（含完整地址） | `"新竹市東區三民里"`, `"桃園市桃園區文中里"` |
-| `candidate` | Candidate name 候選人姓名 | `"鄭正鈐"`, `"蔡英文"` |
-| `party` | Party name 政黨名稱 | `"中國國民黨"`, `"民主進步黨"` |
+|  |  |  |  |
+|----|----|----|----|
+| Parameter 參數 :=============== `year` | Description 描述 :====================================================== Election/Recall year 選舉/罷免年份 | Example Values 範例值 :============================================= `2024`, `2025` |  |
+|  |  |  |  |
+| `office` | Office type 職務類型 | `"president"` (總統) \| \| `"legislator"` (立法委員) \| \| `"mayor"` (縣市長) \| \| `"councilor"` (縣市議員) \| \| `"indigenous_district_chief"` (原住民區長) \| \| `"indigenous_district_representative"` (原住民區民代表) \| `"township_mayor"` (鄉鎮市長) \| \| `"township_representative"` (鄉鎮市民代表) \| \| `"village_chief"` (村里長) \| |  |
+| `sub_type` | Office subtype 職務子類型 | `"regional"` (區域), `"indigenous"` (原住民), \`“at_larg |  |
+| `county_name` | County/City name 縣市名稱 | `"新竹市"`, `"桃園市"` |  |
+| `town_name` | Town/District name with county 鄉鎮市區名稱（含縣市） | `"新竹市東區"`, `"桃園市桃園區"` |  |
+| `village_name` | Village name with full address 村里名稱（含完整地址） | `"新竹市東區三民里"`, `"桃園市桃園區文中里"` |  |
+| `candidate` | Candidate name 候選人姓名 | `"鄭正鈐"`, `"蔡英文"` |  |
+| `party` | Party name 政黨名稱 | `"中國國民黨"`, `"民主進步黨"` |  |
+
+#### Office 與 sub_type 對照表
+
+<table style="width:99%;">
+<colgroup>
+<col style="width: 56%" />
+<col style="width: 18%" />
+<col style="width: 23%" />
+</colgroup>
+<tbody>
+<tr>
+<td rowspan="2"><h1 id="office">office</h1>
+<p><code>"president"</code> (總統)</p></td>
+<td rowspan="2"><h1 id="sub_type">sub_type</h1></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+<tr>
+<td><code>"legislator"</code> (立法委員)</td>
+<td colspan="2"><code>"regional"</code> (區域) | |
+<code>"at_large"</code> (不分區) | | <code>"indigenous_lowland"</code>
+(平地原住 | <code>"indigenous_highland"</code> (山地原住</td>
+</tr>
+<tr>
+<td><code>"mayor"</code> (縣市長)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>"councilor"</code> (縣市議員)</td>
+<td colspan="2"><code>"regional"</code> (區域) | |
+<code>"indigenous_lowland"</code> (平地原住 |
+<code>"indigenous_highland"</code> (山地原住</td>
+</tr>
+<tr>
+<td><code>"indigenous_district_chief"</code> (原住民區長)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="3"><code>"indigenous_district_representative"</code>
+(原住民區民代表) | |</td>
+</tr>
+<tr>
+<td><code>"township_mayor"</code> (鄉鎮市長)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>"township_representative"</code> (鄉鎮市民代表)</td>
+<td colspan="2"><code>"regional"</code> (區域) | |
+<code>"indigenous"</code> (原住民) |</td>
+</tr>
+<tr>
+<td><code>"village_chief"</code> (村里長)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 
 #### **Standardized Output Fields \| 標準化輸出欄位:**
 
@@ -226,20 +316,22 @@ All functions return data with unified field design:
 
 所有函式回傳的資料都採用統一的欄位設計：
 
--   `year` (Year 年份)
--   `data_type` (Data type: “election” or “recall” 資料類型)
--   `office` (Office 職務)
--   `sub_type` (Office subtype 職務子類型)
--   `county`, `town`, `village` (Administrative divisions 行政區劃)
--   `candidate_name` (Candidate name 候選人姓名)
--   `party` (Political party 政黨)
--   `votes` (Vote count/Agree votes 得票數/同意票數)
--   `vote_percentage` (Vote percentage 得票率)
--   `is_elected` / `is_recalled` (Elected/Recalled boolean 當選/罷免成功布林值)
+- `year` (Year 年份)
+- `data_type` (Data type: “election” or “recall” 資料類型)
+- `office` (Office 職務)
+- `sub_type` (Office subtype 職務子類型)
+- `county`, `town`, `village` (Administrative divisions 行政區劃)
+- `candidate_name` (Candidate name 候選人姓名)
+- `party` (Political party 政黨)
+- `votes` (Vote count/Agree votes 得票數/同意票數)
+- `vote_percentage` (Vote percentage 得票率)
+- `is_elected` / `is_recalled` (Elected/Recalled boolean
+  當選/罷免成功布林值)
 
 ## Available Legislators for 2025 Recall \| 可查詢立委名單 (2025年罷免案)
 
-The 2025 recall election covers the following 31 legislators (all members of the Kuomintang):
+The 2025 recall election covers the following 31 legislators (all
+members of the Kuomintang):
 
 目前 2025 年罷免案涵蓋以下 31 位立法委員（全部屬於中國國民黨）：
 
@@ -279,15 +371,19 @@ The 2025 recall election covers the following 31 legislators (all members of the
 
 ## Data Information \| 資料說明
 
--   **Data Source**: Central Election Commission (中央選舉委員會)
--   **Data Level**: Village-level (aggregatable to township and county levels)
--   **資料層級**: 村里級（可聚合至鄉鎮級、縣市級）
--   **Update Frequency**: Updated upon official election result announcements
--   **更新頻率**: 隨選舉結果公布更新
--   **Caching Mechanism**: Automatic local caching to reduce repeated downloads
--   **快取機制**: 自動快取至本地，減少重複下載
--   **Data Format**: Standardized CSV format following tidy data principles
--   **資料格式**: 標準化 CSV 格式，符合 tidy data 原則
+- **Data Source**: Central Election Commission (中央選舉委員會)
+- **Data Level**: Village-level (aggregatable to township and county
+  levels)
+- **資料層級**: 村里級（可聚合至鄉鎮級、縣市級）
+- **Update Frequency**: Updated upon official election result
+  announcements
+- **更新頻率**: 隨選舉結果公布更新
+- **Caching Mechanism**: Automatic local caching to reduce repeated
+  downloads
+- **快取機制**: 自動快取至本地，減少重複下載
+- **Data Format**: Standardized CSV format following tidy data
+  principles
+- **資料格式**: 標準化 CSV 格式，符合 tidy data 原則
 
 ## Use Cases \| 使用案例
 
@@ -295,16 +391,16 @@ This package is particularly valuable for:
 
 本套件特別適用於：
 
--   **Academic Research**
--   **學術研究**: Political science, sociology, and electoral studies
--   **Journalism**
--   **新聞報導**: Data-driven election analysis and reporting
--   **Civil Society**
--   **公民社會**: Citizen participation and democratic oversight
--   **Policy Analysis**
--   **政策分析**: Government and think tank research
--   **Educational Purposes**
--   **教育用途**: Teaching quantitative political analysis
+- **Academic Research**
+- **學術研究**: Political science, sociology, and electoral studies
+- **Journalism**
+- **新聞報導**: Data-driven election analysis and reporting
+- **Civil Society**
+- **公民社會**: Citizen participation and democratic oversight
+- **Policy Analysis**
+- **政策分析**: Government and think tank research
+- **Educational Purposes**
+- **教育用途**: Teaching quantitative political analysis
 
 ## License \| 授權
 
@@ -312,15 +408,22 @@ MIT License
 
 ## Issues & Contributions \| 問題回報與貢獻
 
-For bug reports, feature requests, or contributions, please visit our [GitHub Issues](https://github.com/MiaoChien0204/TaiwanVote/issues).
+For bug reports, feature requests, or contributions, please visit our
+[GitHub Issues](https://github.com/MiaoChien0204/TaiwanVote/issues).
 
-如有問題或建議，請至 [GitHub Issues](https://github.com/MiaoChien0204/TaiwanVote/issues) 回報。
+如有問題或建議，請至 [GitHub
+Issues](https://github.com/MiaoChien0204/TaiwanVote/issues) 回報。
 
 ## About \| 關於
 
-**TaiwanVote** aims to provide a convenient and standardized interface for accessing and analyzing Taiwan’s election data. We believe that open and accessible data can promote deeper academic research, informed journalism, and enhanced civic participation in Taiwan’s democratic processes.
+**TaiwanVote** aims to provide a convenient and standardized interface
+for accessing and analyzing Taiwan’s election data. We believe that open
+and accessible data can promote deeper academic research, informed
+journalism, and enhanced civic participation in Taiwan’s democratic
+processes.
 
-`TaiwanVote` 套件旨在提供一個便捷且標準化的介面，幫助使用者快速獲取和分析臺灣的選舉數據。我們相信透過開放且易於取用的資料，能夠促進更深入的學術研究、新聞報導以及公民參與。
+`TaiwanVote`
+套件旨在提供一個便捷且標準化的介面，幫助使用者快速獲取和分析臺灣的選舉數據。我們相信透過開放且易於取用的資料，能夠促進更深入的學術研究、新聞報導以及公民參與。
 
 ------------------------------------------------------------------------
 
