@@ -132,13 +132,10 @@ clean_one = function(file) {
       village != "",
       !str_detect(village, "總\\s*計")
     ) %>%
-    # Calculate derived columns (README2.md vision)
+    # Calculate derived columns using original data as much as possible
     mutate(
-      turnout_rate = ifelse(
-        is.na(turnout_rate_pct),
-        total_ballots / registered,
-        turnout_rate_pct / 100
-      ),
+      # Use original turnout rate from Excel data (convert from percentage to decimal)
+      turnout_rate = ifelse(!is.na(turnout_rate_pct), turnout_rate_pct / 100, NA_real_),
       votes = agree,  # Main vote count for recall (agree votes)
       vote_percentage = ifelse(total_valid > 0, agree/total_valid, NA_real_),
       is_recalled = agree > disagree  # Boolean: recall successful
