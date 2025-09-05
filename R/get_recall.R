@@ -7,6 +7,8 @@
 #' @param year Numeric vector. The election year(s). Currently supports: 2025.
 #' @param office Character. The type of office. Currently supports: "legislator".
 #' @param sub_type Character. The sub-type of election. Currently supports: "regional".
+#' @param adm_level Character. Administrative level for data aggregation and winner calculation. 
+#'   Options: "polling_station", "village", "town", "county". Default: "polling_station".
 #' @param county_name Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").
 #' @param town_name Character vector. Town/district names with county included 
 #'   (e.g., "新竹市東區", "桃園市桃園區").
@@ -43,8 +45,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Get all 2025 recall data
+#' # Get all 2025 recall data at polling station level (default)
 #' tv_get_recall(year = 2025)
+#' 
+#' # Get data aggregated at village level
+#' tv_get_recall(year = 2025, adm_level = "village")
 #' 
 #' # Get data for a specific county
 #' tv_get_recall(year = 2025, county_name = "新竹市")
@@ -61,8 +66,8 @@
 #' # Get data for a specific party
 #' tv_get_recall(year = 2025, party = "中國國民黨")
 #' 
-#' # Combine filters
-#' tv_get_recall(year = 2025, county_name = "新竹市", party = "中國國民黨")
+#' # Combine filters with administrative level aggregation
+#' tv_get_recall(year = 2025, county_name = "新竹市", party = "中國國民黨", adm_level = "town")
 #' }
 #'
 #' @export
@@ -71,6 +76,7 @@
 tv_get_recall <- function(year = NULL, 
                          office = "legislator", 
                          sub_type = "regional",
+                         adm_level = "polling_station",
                          county_name = NULL,
                          town_name = NULL,
                          village_name = NULL,
@@ -94,6 +100,12 @@ tv_get_recall <- function(year = NULL,
     stop("Currently only 'regional' sub_type is supported")
   }
   
+  # Validate adm_level parameter
+  valid_adm_levels <- c("polling_station", "village", "town", "county")
+  if (!adm_level %in% valid_adm_levels) {
+    stop("adm_level must be one of: ", paste(valid_adm_levels, collapse = ", "))
+  }
+  
   # Load data for each year
   all_data <- NULL
   
@@ -111,15 +123,8 @@ tv_get_recall <- function(year = NULL,
   # Apply filters
   result <- all_data
   
-  # Filter by candidate
-  if (!is.null(candidate)) {
-    result <- dplyr::filter(result, .data$candidate_name %in% candidate)
-  }
-  
-  # Filter by party
-  if (!is.null(party)) {
-    result <- dplyr::filter(result, .data$party %in% party)
-  }
+  # Note: Candidate and party filtering is done AFTER is_recalled calculation 
+  # to ensure recall results are determined based on complete data, not filtered data
   
   # Filter by county
   if (!is.null(county_name)) {
@@ -235,6 +240,18 @@ tv_get_recall <- function(year = NULL,
   
   # Arrange by county, town, village, polling_station_id for consistent ordering
   result <- dplyr::arrange(result, .data$county, .data$town, .data$village, .data$polling_station_id)
+  
+  # Calculate is_recalled based on the specified administrative level
+  result <- tv_aggregate_and_calculate_recall_results(result, adm_level)
+  
+  # Apply candidate and party filters AFTER calculating is_recalled
+  if (!is.null(candidate)) {
+    result <- dplyr::filter(result, .data$candidate_name %in% candidate)
+  }
+  
+  if (!is.null(party)) {
+    result <- dplyr::filter(result, .data$party %in% party)
+  }
   
   return(result)
 }

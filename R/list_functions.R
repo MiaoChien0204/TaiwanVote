@@ -88,6 +88,9 @@ tv_list_available_election_candidates <- function(year = NULL, office = NULL) {
     
     data <- tv_read_data(file_name)
     
+    # Apply aggregation to ensure is_elected is calculated
+    data <- tv_aggregate_and_calculate_winners(data, "polling_station")
+    
     # Extract unique candidates with their info
     candidates <- data %>%
       dplyr::select("year", "office", "candidate_name", "party") %>%
@@ -329,32 +332,32 @@ tv_list_available_parties <- function(year = NULL, office = NULL) {
 #'
 #' @param year Numeric. The election year. If NULL, returns all years.
 #' @param office Character. The office type. If NULL, returns all office types.
-#' @param level Character. The administrative level. Options: "county", "town", "village".
+#' @param adm_level Character. The administrative level. Options: "county", "town", "village".
 #'
 #' @return A tibble with area information including:
 #' \describe{
 #'   \item{year}{Election year}
 #'   \item{office}{Office type}
 #'   \item{area_name}{Area name}
-#'   \item{level}{Administrative level}
+#'   \item{adm_level}{Administrative level}
 #'   \item{parent_area}{Parent administrative area (for towns and villages)}
 #' }
 #'
 #' @examples
 #' \dontrun{
 #' # List all counties with recall elections
-#' tv_list_available_areas(level = "county")
+#' tv_list_available_areas(adm_level = "county")
 #' 
 #' # List all towns in 2025 recall elections
-#' tv_list_available_areas(year = 2025, level = "town")
+#' tv_list_available_areas(year = 2025, adm_level = "town")
 #' }
 #'
 #' @export
-tv_list_available_areas <- function(year = NULL, office = NULL, level = "county") {
+tv_list_available_areas <- function(year = NULL, office = NULL, adm_level = "county") {
   
-  valid_levels <- c("county", "town", "village")
-  if (!level %in% valid_levels) {
-    stop("level must be one of: ", paste(valid_levels, collapse = ", "))
+  valid_adm_levels <- c("county", "town", "village")
+  if (!adm_level %in% valid_adm_levels) {
+    stop("adm_level must be one of: ", paste(valid_adm_levels, collapse = ", "))
   }
   
   # Get all available recall data
@@ -380,30 +383,30 @@ tv_list_available_areas <- function(year = NULL, office = NULL, level = "county"
     file_name <- paste0(recall_info$year, "_", recall_info$office, "_recall.csv")
     data <- tv_read_data(file_name)
     
-    # Extract areas based on level
-    if (level == "county") {
+    # Extract areas based on adm_level
+    if (adm_level == "county") {
       areas <- data %>%
         dplyr::select("year", "office", area_name = "county") %>%
         dplyr::distinct() %>%
         dplyr::mutate(
-          level = "county",
+          adm_level = "county",
           parent_area = NA_character_
         )
-    } else if (level == "town") {
+    } else if (adm_level == "town") {
       areas <- data %>%
         dplyr::select("year", "office", "county", area_name = "town") %>%
         dplyr::distinct() %>%
         dplyr::mutate(
-          level = "town",
+          adm_level = "town",
           parent_area = .data$county
         ) %>%
         dplyr::select(-"county")
-    } else if (level == "village") {
+    } else if (adm_level == "village") {
       areas <- data %>%
         dplyr::select("year", "office", "town", area_name = "village") %>%
         dplyr::distinct() %>%
         dplyr::mutate(
-          level = "village",
+          adm_level = "village",
           parent_area = .data$town
         ) %>%
         dplyr::select(-"town")
@@ -421,7 +424,7 @@ tv_list_available_areas <- function(year = NULL, office = NULL, level = "county"
       year = numeric(0),
       office = character(0),
       area_name = character(0),
-      level = character(0),
+      adm_level = character(0),
       parent_area = character(0)
     )
   }

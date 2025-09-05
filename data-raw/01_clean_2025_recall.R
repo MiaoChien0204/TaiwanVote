@@ -3,11 +3,12 @@
 # Input : data-raw/raw/*.xlsx
 # Output: data-raw/release/2025_legislator_recall.csv
 
-# Output columns aligned with README2.md vision:
+# Output columns aligned with README vision:
 # year, data_type, office, sub_type, county, town, village, polling_station_id,
-# candidate_name, party, votes, vote_percentage, is_recalled,
+# candidate_name, party, votes, vote_percentage,
 # disagree, invalid, total_valid, total_ballots, not_voted_but_issued,
 # issued_ballots, unused_ballots, registered, turnout_rate
+# Note: is_recalled is NOT included in raw data - calculated dynamically in R package
 
 
 
@@ -137,15 +138,15 @@ clean_one = function(file) {
       # Use original turnout rate from Excel data (convert from percentage to decimal)
       turnout_rate = ifelse(!is.na(turnout_rate_pct), turnout_rate_pct / 100, NA_real_),
       votes = agree,  # Main vote count for recall (agree votes)
-      vote_percentage = ifelse(total_valid > 0, agree/total_valid, NA_real_),
-      is_recalled = agree > disagree  # Boolean: recall successful
+      vote_percentage = ifelse(total_valid > 0, agree/total_valid, NA_real_)
+      # Note: is_recalled removed - will be calculated dynamically in R package functions
     ) %>%
     # Join with party information
     left_join(candidate_party_mapping, by = "candidate_name") %>%
     select(
-      # README2.md vision column order
+      # Raw data columns (no calculated is_recalled field)
       year, data_type, office, sub_type, county, town, village, polling_station_id,
-      candidate_name, party, votes, vote_percentage, is_recalled,
+      candidate_name, party, votes, vote_percentage,
       # Additional recall-specific columns
       disagree, invalid, total_valid, total_ballots, not_voted_but_issued,
       issued_ballots, unused_ballots, registered, turnout_rate

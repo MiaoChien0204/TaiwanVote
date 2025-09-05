@@ -6,6 +6,8 @@
 #'
 #' @param year Numeric vector. The election year(s). Currently supports: 2024.
 #' @param office Character. The type of office. Currently supports: "president".
+#' @param adm_level Character. Administrative level for data aggregation. 
+#'   Options: "polling_station" (default), "village", "town", "county".
 #' @param sub_type Character. The sub-type of election. For president, this should be NULL.
 #' @param county_name Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").
 #' @param town_name Character vector. Town/district names with county included 
@@ -57,6 +59,9 @@
 #' # Get data for a specific party
 #' tv_get_election(year = 2024, office = "president", party = "民主進步黨")
 #' 
+#' # Get data with specific administrative level
+#' tv_get_election(year = 2024, office = "president", adm_level = "county")
+#' 
 #' # Combine filters
 #' tv_get_election(year = 2024, office = "president", county_name = "新竹市", party = "民主進步黨")
 #' }
@@ -66,6 +71,7 @@
 #' @importFrom dplyr filter bind_rows arrange
 tv_get_election <- function(year = NULL, 
                            office = NULL, 
+                           adm_level = "polling_station",
                            sub_type = NULL,
                            county_name = NULL,
                            town_name = NULL,
@@ -80,6 +86,12 @@ tv_get_election <- function(year = NULL,
   
   if (is.null(office)) {
     stop("Office parameter is required. Currently supported: 'president'")
+  }
+  
+  # Validate adm_level parameter
+  valid_adm_levels <- c("polling_station", "village", "town", "county")
+  if (!adm_level %in% valid_adm_levels) {
+    stop("adm_level must be one of: ", paste(valid_adm_levels, collapse = ", "))
   }
   
   if (!all(year %in% 2024)) {
@@ -118,15 +130,8 @@ tv_get_election <- function(year = NULL,
   # Apply filters
   result <- all_data
   
-  # Filter by candidate
-  if (!is.null(candidate)) {
-    result <- dplyr::filter(result, candidate_name %in% !!candidate)
-  }
-  
-  # Filter by party
-  if (!is.null(party)) {
-    result <- dplyr::filter(result, party %in% !!party)
-  }
+  # Note: Candidate and party filtering is done AFTER is_elected calculation 
+  # to ensure winners are determined based on complete competition, not filtered data
   
   # Filter by county
   if (!is.null(county_name)) {
@@ -242,6 +247,18 @@ tv_get_election <- function(year = NULL,
   
   # Arrange by county, town, village, polling_station_id for consistent ordering
   result <- dplyr::arrange(result, county, town, village, polling_station_id)
+  
+  # Apply administrative level aggregation and calculate is_elected based on adm_level
+  result <- tv_aggregate_and_calculate_winners(result, adm_level)
+  
+  # Apply candidate and party filters AFTER calculating is_elected to ensure correct winner determination
+  if (!is.null(candidate)) {
+    result <- dplyr::filter(result, candidate_name %in% !!candidate)
+  }
+  
+  if (!is.null(party)) {
+    result <- dplyr::filter(result, party %in% !!party)
+  }
   
   return(result)
 }

@@ -8,6 +8,7 @@ tv_get_recall(
   year = NULL,
   office = "legislator",
   sub_type = "regional",
+  adm_level = "polling_station",
   county_name = NULL,
   town_name = NULL,
   village_name = NULL,
@@ -21,6 +22,9 @@ tv_get_recall(
 \item{office}{Character. The type of office. Currently supports: "legislator".}
 
 \item{sub_type}{Character. The sub-type of election. Currently supports: "regional".}
+
+\item{adm_level}{Character. Administrative level for data aggregation and winner calculation.
+Options: "polling_station", "village", "town", "county". Default: "polling_station".}
 
 \item{county_name}{Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").}
 
@@ -67,8 +71,11 @@ Currently supports 2025 legislator recall data.
 }
 \examples{
 \dontrun{
-# Get all 2025 recall data
+# Get all 2025 recall data at polling station level (default)
 tv_get_recall(year = 2025)
+
+# Get data aggregated at village level
+tv_get_recall(year = 2025, adm_level = "village")
 
 # Get data for a specific county
 tv_get_recall(year = 2025, county_name = "新竹市")
@@ -85,8 +92,8 @@ tv_get_recall(year = 2025, candidate = "馬文君")
 # Get data for a specific party
 tv_get_recall(year = 2025, party = "中國國民黨")
 
-# Combine filters
-tv_get_recall(year = 2025, county_name = "新竹市", party = "中國國民黨")
+# Combine filters with administrative level aggregation
+tv_get_recall(year = 2025, county_name = "新竹市", party = "中國國民黨", adm_level = "town")
 }
 
 }

@@ -7,6 +7,7 @@
 tv_get_election(
   year = NULL,
   office = NULL,
+  adm_level = "polling_station",
   sub_type = NULL,
   county_name = NULL,
   town_name = NULL,
@@ -19,6 +20,9 @@ tv_get_election(
 \item{year}{Numeric vector. The election year(s). Currently supports: 2024.}
 
 \item{office}{Character. The type of office. Currently supports: "president".}
+
+\item{adm_level}{Character. Administrative level for data aggregation.
+Options: "polling_station" (default), "village", "town", "county".}
 
 \item{sub_type}{Character. The sub-type of election. For president, this should be NULL.}
 
@@ -80,6 +84,9 @@ tv_get_election(year = 2024, office = "president", candidate = "賴清德")
 
 # Get data for a specific party
 tv_get_election(year = 2024, office = "president", party = "民主進步黨")
+
+# Get data with specific administrative level
+tv_get_election(year = 2024, office = "president", adm_level = "county")
 
 # Combine filters
 tv_get_election(year = 2024, office = "president", county_name = "新竹市", party = "民主進步黨")

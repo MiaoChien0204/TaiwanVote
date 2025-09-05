@@ -5,8 +5,9 @@
 
 # Output columns aligned with README vision:
 # year, data_type, office, sub_type, county, town, village, polling_station_id,
-# candidate_name, party, votes, vote_percentage, is_elected,
+# candidate_name, party, votes, vote_percentage,
 # invalid, total_valid, total_ballots, registered, turnout_rate
+# Note: is_elected is NOT included in raw data - calculated dynamically in R package
 
 suppressPackageStartupMessages({
   library(readxl)
@@ -189,17 +190,13 @@ clean_one = function(file, candidate_mapping) {
       mutate(
         votes = to_num(votes),
         vote_percentage = ifelse(total_valid > 0, votes / total_valid, NA_real_)
+        # Note: is_elected removed - will be calculated dynamically in R package functions
       ) %>%
-      # Calculate election result by polling station
-      group_by(county, town, village, polling_station_id) %>%
-      mutate(
-        is_elected = votes == max(votes, na.rm = TRUE)
-      ) %>%
-      ungroup() %>%
+      # Remove grouping and is_elected calculation
       select(
-        # README vision column order
+        # Raw data columns (no calculated is_elected field)
         year, data_type, office, sub_type, county, town, village, polling_station_id,
-        candidate_name, party, votes, vote_percentage, is_elected,
+        candidate_name, party, votes, vote_percentage,
         # Additional election-specific columns
         invalid, total_valid, total_ballots, registered, turnout_rate
       )
