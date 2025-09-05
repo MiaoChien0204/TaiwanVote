@@ -120,17 +120,17 @@ tv_get_election <- function(year = NULL,
   
   # Filter by candidate
   if (!is.null(candidate)) {
-    result <- dplyr::filter(result, .data$candidate_name %in% candidate)
+    result <- dplyr::filter(result, candidate_name %in% !!candidate)
   }
   
   # Filter by party
   if (!is.null(party)) {
-    result <- dplyr::filter(result, .data$party %in% party)
+    result <- dplyr::filter(result, party %in% !!party)
   }
   
   # Filter by county
   if (!is.null(county_name)) {
-    result <- dplyr::filter(result, .data$county %in% county_name)
+    result <- dplyr::filter(result, county %in% !!county_name)
   }
   
   # Filter by town (requires full format like "新竹市東區")
@@ -158,12 +158,12 @@ tv_get_election <- function(year = NULL,
     if (length(town_filters) > 0) {
       if (length(town_filters) == 1) {
         tf <- town_filters[[1]]
-        result <- dplyr::filter(result, .data$county == !!tf$county & .data$town == !!tf$town)
+        result <- dplyr::filter(result, county == !!tf$county & town == !!tf$town)
       } else {
         filtered_results <- list()
         for (tf in town_filters) {
           filtered_results[[length(filtered_results) + 1]] <- 
-            dplyr::filter(result, .data$county == !!tf$county & .data$town == !!tf$town)
+            dplyr::filter(result, county == !!tf$county & town == !!tf$town)
         }
         result <- do.call(dplyr::bind_rows, filtered_results)
       }
@@ -223,17 +223,17 @@ tv_get_election <- function(year = NULL,
       if (length(village_filters) == 1) {
         vf <- village_filters[[1]]
         result <- dplyr::filter(result, 
-          .data$county == !!vf$county & 
-          .data$town == !!vf$town & 
-          .data$village == !!vf$village)
+          county == !!vf$county & 
+          town == !!vf$town & 
+          village == !!vf$village)
       } else {
         filtered_results <- list()
         for (vf in village_filters) {
           filtered_results[[length(filtered_results) + 1]] <- 
             dplyr::filter(result, 
-              .data$county == !!vf$county & 
-              .data$town == !!vf$town & 
-              .data$village == !!vf$village)
+              county == !!vf$county & 
+              town == !!vf$town & 
+              village == !!vf$village)
         }
         result <- do.call(dplyr::bind_rows, filtered_results)
       }
@@ -241,7 +241,7 @@ tv_get_election <- function(year = NULL,
   }
   
   # Arrange by county, town, village, polling_station_id for consistent ordering
-  result <- dplyr::arrange(result, .data$county, .data$town, .data$village, .data$polling_station_id)
+  result <- dplyr::arrange(result, county, town, village, polling_station_id)
   
   return(result)
 }
