@@ -234,7 +234,7 @@ The `adm_level` parameter determines both data aggregation and how **ALL statist
 
 -   `is_elected`/`is_recalled`: Winner status at specified level \| 指定行政區層級的勝負狀態
 
-**Example**: A candidate may have 30% at polling station level but 45% at county level \
+**Example**: A candidate may have 30% at polling station level but 45% at county level\
 **範例**: 同一候選人在投票所層級可能得票率 30%，但在縣市層級可能是 45%
 
 ### Administrative Level Impact \| 行政區層級的影響
@@ -404,7 +404,7 @@ tv_get_recall(
 
 -   **`adm_level`** *(Optional 選填)*
 
-    -   **Description 描述**: \
+    -   **Description 描述**:\
         Administrative level you would like to aggregate 指定聚合的行政區層級
 
     -   **Default 預設值**: `"polling_station"`
@@ -538,22 +538,28 @@ All functions return data with unified field design:
 -   `vote_percentage` (Vote percentage 得票率)
     -   該候選人在指定層級的得票率 Vote percentage at the specified level
 -   `is_elected` / `is_recalled` (Winner status at specified administrative level 在指定行政層級的勝出狀態)
-    -   ⚠️ **注意 Note**: 此欄位反映「在指定層級的勝負狀況」，非實際選舉結果 This field reflects "winning status at the specified level", not actual election outcomes
-    -   **Determined by `adm_level` parameter**: Results calculated based on the specified administrative level
-    -   **Election**: TRUE if candidate received most votes at the specified level
-    -   **Recall**: TRUE if agree votes \> disagree votes at the specified level
-    -   **由 `adm_level` 參數決定**：根據指定的行政區層級計算結果
+    -   ⚠️ **重要概念 Key Concept**: 此欄位反映「在指定行政層級範圍內的勝負狀況」，不是實際選舉結果 This field reflects "winning status within the specified administrative level scope", not actual election outcomes
+    -   **計算邏輯 Calculation Logic**: 先依據 `adm_level` 聚合計算，再進行候選人篩選 First aggregate by `adm_level`, then apply candidate filtering
+    -   **Election**: TRUE if candidate received most votes at the specified level 在指定層級得票最多為 TRUE
+    -   **Recall**: TRUE if agree votes \> disagree votes at the specified level 在指定層級同意票多於不同意票為 TRUE
+    -   **關鍵特性 Key Feature**: 同一候選人在不同行政層級可能有不同的 is_elected 值 Same candidate may have different is_elected values at different levels
     -   **選舉**：該候選人在指定層級得票最多為 TRUE
     -   **罷免**：該層級同意票多於不同意票為 TRUE
 -   `invalid` (Invalid votes 無效票數)
     -   指定層級的無效票數 Invalid votes at the specified level
 -   `total_valid` (Total valid votes 有效票總數)
+    -   **選舉案 Election**: 所有候選人得票數總和 Sum of all candidates' votes
+    -   **罷免案 Recall**: 同意票 + 不同意票 `votes + disagree`
+    -   **重要 Important**: 不包含無效票 Does NOT include invalid votes
     -   指定層級的有效票總數 Total valid votes at the specified level
 -   `total_ballots` (Total ballots cast 總投票數)
+    -   **計算公式 Formula**: `total_valid + invalid` (有效票 + 無效票)
     -   指定層級的總投票數 Total ballots cast at the specified level
 -   `registered` (Registered voters 選舉人數)
     -   指定層級的選舉人數 Registered voters at the specified level
 -   `turnout_rate` (Voter turnout rate 投票率)
+    -   **計算公式 Formula**: `total_ballots / registered * 100`
+    -   **說明 Note**: `total_ballots = total_valid + invalid` (有效票 + 無效票)
     -   指定層級的投票率 Voter turnout rate at the specified level
 
 ## Available Legislators for 2025 Recall \| 可查詢立委名單 (2025年罷免案)
