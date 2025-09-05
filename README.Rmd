@@ -170,7 +170,34 @@ village_data1 <- tv_get_recall(year = 2025, village_name = "新竹市東區三�
 head(village_data1)
 ```
 
-#### 5. Combined Queries \| 組合查詢
+#### 6. Understanding Administrative Scale Impact \| 理解行政區尺度的影響
+
+```{r eval=FALSE}
+# Same candidate may have different is_recalled results at different scales
+# 同一候選人在不同尺度可能有不同的 is_recalled 結果
+
+# Village-level results: detailed polling station winners
+# 村里級結果：詳細的投票所勝負
+village_results <- tv_get_recall(
+  year = 2025, 
+  candidate = "鄭正鈐", 
+  village_name = "新竹市東區三民里"
+)
+# is_recalled shows agree/disagree winner per polling station
+# is_recalled 顯示各投票所的同意/不同意票勝負
+
+# County-level results: aggregated across entire county
+# 縣市級結果：整個縣市的聚合結果
+county_results <- tv_get_recall(
+  year = 2025, 
+  candidate = "鄭正鈐", 
+  county_name = "新竹市"
+)
+# is_recalled shows overall agree/disagree result for entire county
+# is_recalled 顯示整個縣市的整體同意/不同意票結果
+```
+
+#### 7. Combined Queries \| 組合查詢
 
 ```{r eval=FALSE}
 # Detailed results for specific candidate in specific region | 特定候選人在特定地區的詳細結果
@@ -211,8 +238,16 @@ Future unified but separated data retrieval functions will be provided:
 tv_get_election(
   year = 2024,          # Election year | 選舉年份
   office = "president", # Office type | 競選職務
-  level = "county"      # Data level | 資料層級
+  county_name = "臺中市" # Administrative level determines is_elected calculation
+                        # 行政區尺度決定 is_elected 的計算方式
 )
+
+# Different administrative levels yield different is_elected results
+# 不同行政區尺度產生不同的 is_elected 結果:
+# - Village level: winner per polling station
+# - County level: winner aggregated across entire county
+# - 村里級：各投票所的勝出者
+# - 縣市級：整個縣市聚合後的勝出者
 
 # Recall election data query (implemented) | 罷免案資料查詢 (已實作)
 tv_get_recall(
@@ -323,7 +358,13 @@ All functions return data with unified field design:
 **Vote Results \| 投票結果:**
 -   `votes` (Vote count/Agree votes 得票數/同意票數)
 -   `vote_percentage` (Vote percentage 得票率)
--   `is_elected` / `is_recalled` (Elected/Recalled status 當選/罷免成功狀態)
+-   `is_elected` / `is_recalled` (Winner status at selected administrative level 在所選行政區尺度的勝出狀態)
+    - For elections: TRUE if candidate received most votes at the selected level
+    - For recalls: TRUE if agree votes > disagree votes at the selected level
+    - **Note**: Results vary by administrative scale (village vs. county level)
+    - 選舉：該候選人在所選行政區尺度得票最多為 TRUE
+    - 罷免：該行政區尺度同意票多於不同意票為 TRUE
+    - **注意**：結果會隨行政區尺度而異（村里級 vs. 縣市級）
 
 **Election Statistics \| 選舉統計:**
 -   `invalid` (Invalid votes 無效票數)
