@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_functions.R
 \name{tv_list_available_recalls}
 \alias{tv_list_available_recalls}
-\title{List available Taiwan recall elections}
+\title{List Available Recall Elections}
 \usage{
 tv_list_available_recalls()
 }

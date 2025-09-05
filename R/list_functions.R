@@ -1,4 +1,170 @@
-#' List available Taiwan recall elections
+#' List available Taiwan elections
+#'
+#' @description
+#' Lists all available elections in the TaiwanVote package.
+#'
+#' @return A tibble with information about available elections including:
+#' \describe{
+#'   \item{year}{Election year}
+#'   \item{office}{Office type}
+#'   \item{sub_type}{Sub-type of election}
+#'   \item{description}{Description of the election}
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' # List all available elections
+#' tv_list_available_elections()
+#' }
+#'
+#' @export
+tv_list_available_elections <- function() {
+  
+  # Currently available elections
+  elections <- tibble::tibble(
+    year = c(2024),
+    office = c("president"),
+    sub_type = c(NA_character_),
+    description = c("2024 總統副總統選舉")
+  )
+  
+  return(elections)
+}
+
+#' List available candidates in elections
+#'
+#' @description
+#' Lists all candidates who participated in elections by year and office type.
+#'
+#' @param year Numeric. The election year. If NULL, returns all years.
+#' @param office Character. The office type. If NULL, returns all office types.
+#'
+#' @return A tibble with candidate information including:
+#' \describe{
+#'   \item{year}{Election year}
+#'   \item{office}{Office type}
+#'   \item{candidate_name}{Candidate name}
+#'   \item{party}{Political party}
+#'   \item{is_elected}{Whether the candidate was elected}
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' # List all candidates in elections
+#' tv_list_available_election_candidates()
+#' 
+#' # List candidates for 2024
+#' tv_list_available_election_candidates(year = 2024)
+#' }
+#'
+#' @export
+tv_list_available_election_candidates <- function(year = NULL, office = NULL) {
+  
+  # Get all available election data
+  all_elections <- tv_list_available_elections()
+  
+  # Filter by year if specified
+  if (!is.null(year)) {
+    all_elections <- dplyr::filter(all_elections, .data$year %in% !!year)
+  }
+  
+  # Filter by office if specified  
+  if (!is.null(office)) {
+    all_elections <- dplyr::filter(all_elections, .data$office %in% !!office)
+  }
+  
+  # Get candidate data for each election
+  candidates_list <- list()
+  
+  for (i in seq_len(nrow(all_elections))) {
+    election_info <- all_elections[i, ]
+    
+    # Load the data
+    if (election_info$office == "president") {
+      file_name <- paste0(election_info$year, "_president_election.csv")
+    } else {
+      file_name <- paste0(election_info$year, "_", election_info$office, "_election.csv")
+    }
+    
+    data <- tv_read_data(file_name)
+    
+    # Extract unique candidates with their info
+    candidates <- data %>%
+      dplyr::select("year", "office", "candidate_name", "party") %>%
+      dplyr::distinct() %>%
+      dplyr::left_join(
+        data %>%
+          dplyr::group_by(.data$candidate_name) %>%
+          dplyr::summarise(is_elected = any(.data$is_elected, na.rm = TRUE), .groups = "drop"),
+        by = "candidate_name"
+      )
+    
+    candidates_list[[i]] <- candidates
+  }
+  
+  # Combine all candidates
+  if (length(candidates_list) > 0) {
+    result <- dplyr::bind_rows(candidates_list)
+    result <- dplyr::arrange(result, .data$year, .data$candidate_name)
+  } else {
+    result <- tibble::tibble(
+      year = numeric(0),
+      office = character(0),
+      candidate_name = character(0),
+      party = character(0),
+      is_elected = logical(0)
+    )
+  }
+  
+  return(result)
+}
+
+#' List available parties in elections
+#'
+#' @description
+#' Lists all political parties that had candidates in elections.
+#'
+#' @param year Numeric. The election year. If NULL, returns all years.
+#' @param office Character. The office type. If NULL, returns all office types.
+#'
+#' @return A tibble with party information including:
+#' \describe{
+#'   \item{year}{Election year}
+#'   \item{office}{Office type}
+#'   \item{party}{Political party name}
+#'   \item{candidate_count}{Number of candidates from this party}
+#'   \item{elected_count}{Number of elected candidates from this party}
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' # List all parties in elections
+#' tv_list_available_election_parties()
+#' 
+#' # List parties for 2024
+#' tv_list_available_election_parties(year = 2024)
+#' }
+#'
+#' @export
+tv_list_available_election_parties <- function(year = NULL, office = NULL) {
+  
+  # Get candidate data
+  candidates <- tv_list_available_election_candidates(year = year, office = office)
+  
+  # Summarize by party
+  result <- candidates %>%
+    dplyr::group_by(.data$year, .data$office, .data$party) %>%
+    dplyr::summarise(
+      candidate_count = dplyr::n(),
+      elected_count = sum(.data$is_elected, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    dplyr::arrange(.data$year, .data$party)
+  
+  return(result)
+}
+
+#' List Available Recall Elections
 #'
 #' @description
 #' Lists all available recall elections in the TaiwanVote package.

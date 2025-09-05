@@ -5,5 +5,7 @@
 ^.Rproj.user$
 ^.git$
 ^.gitignore$
+^.*.Rproj$
+^.Rproj.user$
 ^.*\.Rproj$
 ^\.Rproj\.user$

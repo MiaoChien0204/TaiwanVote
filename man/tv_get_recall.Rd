@@ -8,8 +8,9 @@ tv_get_recall(
   year = NULL,
   office = "legislator",
   sub_type = "regional",
-  level = "all",
-  area_name = NULL,
+  county_name = NULL,
+  town_name = NULL,
+  village_name = NULL,
   candidate = NULL,
   party = NULL
 )
@@ -21,18 +22,17 @@ tv_get_recall(
 
 \item{sub_type}{Character. The sub-type of election. Currently supports: "regional".}
 
-\item{level}{Character. The administrative level for filtering. Options:
-"all" (default), "county", "town", "village", "polling_station".
-When "all" is used with area_name, it will search across all administrative levels.}
+\item{county_name}{Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").}
 
-\item{area_name}{Character. The name of the area to filter by. Supports both
-simple names (e.g., "東區", "三民里") and full administrative names
-(e.g., "新竹市東區", "新竹市東區三民里"). When using full names, the function
-will automatically parse and match the appropriate administrative levels.}
+\item{town_name}{Character vector. Town/district names with county included
+(e.g., "新竹市東區", "桃園市桃園區").}
 
-\item{candidate}{Character. The name of the candidate to filter by.}
+\item{village_name}{Character vector. Village names with full address
+(e.g., "新竹市東區三民里", "桃園市桃園區文中里").}
 
-\item{party}{Character. The political party to filter by.}
+\item{candidate}{Character vector. The name(s) of the candidate(s) to filter by.}
+
+\item{party}{Character vector. The political party/parties to filter by.}
 }
 \value{
 A tibble containing recall election results with the following columns:
@@ -70,20 +70,23 @@ Currently supports 2025 legislator recall data.
 # Get all 2025 recall data
 tv_get_recall(year = 2025)
 
+# Get data for a specific county
+tv_get_recall(year = 2025, county_name = "新竹市")
+
+# Get data for a specific town
+tv_get_recall(year = 2025, town_name = "新竹市東區")
+
+# Get data for a specific village
+tv_get_recall(year = 2025, village_name = "新竹市東區三民里")
+
 # Get data for a specific candidate
 tv_get_recall(year = 2025, candidate = "馬文君")
 
 # Get data for a specific party
 tv_get_recall(year = 2025, party = "中國國民黨")
 
-# Get data for a specific county
-tv_get_recall(year = 2025, level = "county", area_name = "新竹市")
-
-# Get data for a specific town (must include county/city name)
-tv_get_recall(year = 2025, level = "town", area_name = "新竹市東區")
-
-# Get data for a specific village (must include full address)
-tv_get_recall(year = 2025, level = "village", area_name = "新竹市東區三民里")
+# Combine filters
+tv_get_recall(year = 2025, county_name = "新竹市", party = "中國國民黨")
 }
 
 }

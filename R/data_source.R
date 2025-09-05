@@ -3,6 +3,7 @@
 
 .get_release_url <- function(file_name) {
   # Generate URL for specific file from GitHub releases
+  # Use latest tag for all data files
   base_url <- "https://github.com/MiaoChien0204/TaiwanVote/releases/latest/download/"
   paste0(base_url, file_name)
 }
