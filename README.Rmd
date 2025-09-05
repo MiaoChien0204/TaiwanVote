@@ -304,16 +304,33 @@ All functions return data with unified field design:
 
 所有函式回傳的資料都採用統一的欄位設計：
 
+**Basic Information \| 基本資訊:**
 -   `year` (Year 年份)
 -   `data_type` (Data type: "election" or "recall" 資料類型)
--   `office` (Office 職務)
+-   `office` (Office type 職務類型)
 -   `sub_type` (Office subtype 職務子類型)
--   `county`, `town`, `village` (Administrative divisions 行政區劃)
+
+**Geographic Information \| 地理資訊:**
+-   `county` (County/City 縣市)
+-   `town` (Town/District 鄉鎮市區)
+-   `village` (Village 村里)
+-   `polling_station_id` (Polling station ID 投票所代碼)
+
+**Candidate Information \| 候選人資訊:**
 -   `candidate_name` (Candidate name 候選人姓名)
 -   `party` (Political party 政黨)
+
+**Vote Results \| 投票結果:**
 -   `votes` (Vote count/Agree votes 得票數/同意票數)
 -   `vote_percentage` (Vote percentage 得票率)
--   `is_elected` / `is_recalled` (Elected/Recalled boolean 當選/罷免成功布林值)
+-   `is_elected` / `is_recalled` (Elected/Recalled status 當選/罷免成功狀態)
+
+**Election Statistics \| 選舉統計:**
+-   `invalid` (Invalid votes 無效票數)
+-   `total_valid` (Total valid votes 有效票總數)
+-   `total_ballots` (Total ballots cast 總投票數)
+-   `registered` (Registered voters 選舉人數)
+-   `turnout_rate` (Voter turnout rate 投票率)
 
 ## Available Legislators for 2025 Recall \| 可查詢立委名單 (2025年罷免案)
 
