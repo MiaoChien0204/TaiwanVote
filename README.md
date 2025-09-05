@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # TaiwanVote
 
 ## Taiwan Election Database R Package
@@ -7,63 +8,91 @@
 ## 臺灣選舉資料庫 R 語言套件
 
 <!-- badges: start -->
+
 <!-- badges: end -->
-## Package Overview | 套件總覽
 
-**TaiwanVote** is an R package designed for retrieving Taiwan's election voting results at different administrative levels. The package provides three core functionalities: **Administrative Level Selection**, **Data Filtering**, and **Combined Operations**. Users can specify the desired administrative level (county, town, village, or polling station) to determine how election winners are calculated, while applying various filters for candidates, parties, and regions.
+## Package Overview \| 套件總覽
 
-⚠️ **Key Concept**: All statistical values (vote counts, percentages, winner status) are recalculated based on the specified administrative level.
+**TaiwanVote** is an R package designed for retrieving Taiwan’s election
+voting results at different administrative levels. The package provides
+three core functionalities: **Administrative Level Selection**, **Data
+Filtering**, and **Combined Operations**. Users can specify the desired
+administrative level (county, town, village, or polling station) to
+determine how election winners are calculated, while applying various
+filters for candidates, parties, and regions.
 
-**TaiwanVote** provides a **comprehensive Taiwan election data retrieval interface**, covering recall elections and expanding to include detailed historical data of central and local public official elections, with standardized and user-friendly interfaces for researchers and citizens.
+⚠️ **Key Concept**: All statistical values (vote counts, percentages,
+winner status) are recalculated based on the specified administrative
+level.
 
-`TaiwanVote` 是一個專為取得臺灣選舉投票結果而設計的 R 語言套件，支援不同行政層級的資料擷取。套件提供三大核心功能：**行政層級選擇**、**資料篩選**、**組合操作**。使用者可以指定所需的行政層級（縣市、鄉鎮、村里或投票所），決定當選者的計算方式，同時可對候選人、政黨、地區等進行多條件篩選。
+**TaiwanVote** provides a **comprehensive Taiwan election data retrieval
+interface**, covering recall elections and expanding to include detailed
+historical data of central and local public official elections, with
+standardized and user-friendly interfaces for researchers and citizens.
 
-⚠️ **重要概念**：所有統計數值（得票數、得票率、勝負狀況）都會根據指定的行政層級重新計算。
+`TaiwanVote` 是一個專為取得臺灣選舉投票結果而設計的 R
+語言套件，支援不同行政層級的資料擷取。套件提供三大核心功能：**行政層級選擇**、**資料篩選**、**組合操作**。使用者可以指定所需的行政層級（縣市、鄉鎮、村里或投票所），決定當選者的計算方式，同時可對候選人、政黨、地區等進行多條件篩選。
 
-**TaiwanVote** 提供一個**全面的臺灣選舉資料擷取介面**，涵蓋罷免案並擴展至歷年來所有中央與地方公職人員選舉的詳盡數據，並提供標準化、易於使用的介面供研究者和公民取用。
+⚠️
+**重要概念**：所有統計數值（得票數、得票率、勝負狀況）都會根據指定的行政層級重新計算。
 
-## 🚧 Development Progress | 開發進度
+**TaiwanVote**
+提供一個**全面的臺灣選舉資料擷取介面**，涵蓋罷免案並擴展至歷年來所有中央與地方公職人員選舉的詳盡數據，並提供標準化、易於使用的介面供研究者和公民取用。
 
-### ✅ Completed Features | 已完成功能
+## 🚧 Development Progress \| 開發進度
 
-#### **2025 Legislative Recall Election | 2025 年立法委員罷免案**
+### ✅ Completed Features \| 已完成功能
 
--   ✅ **Core Function**: `tv_get_recall()` - Unified recall election query interface
--   ✅ **核心函式**: 統一的罷免案查詢介面
--   ✅ **Multi-dimensional Queries**: Support queries by year, candidate, party, and region
--   ✅ **多維度查詢**: 支援按年份、候選人、政黨、地區查詢
--   ✅ **Multi-level Data**: Support village, township, and county-level data aggregation
--   ✅ **多層級資料**: 支援村里級、鄉鎮級、縣市級資料聚合
--   ✅ **Standardized Format**: Unified field design for consistent data structure
--   ✅ **標準化格式**: 統一欄位設計，確保資料結構一致性
--   ✅ **Helper Functions**: `tv_list_available_recalls()`, `tv_list_available_candidates()`, etc.
--   ✅ **輔助函式**: 等輔助查詢功能
--   ✅ **Complete Data**: Village-level voting results for all 31 legislators nationwide
--   ✅ **完整資料**: 涵蓋全台 31 位立委的村里級投票結果
+#### **2025 Legislative Recall Election \| 2025 年立法委員罷免案**
 
-#### **Data Infrastructure | 資料基礎建設**
+- ✅ **Core Function**: `tv_get_recall()` - Unified recall election
+  query interface
+- ✅ **核心函式**: 統一的罷免案查詢介面
+- ✅ **Multi-dimensional Queries**: Support queries by year, candidate,
+  party, and region
+- ✅ **多維度查詢**: 支援按年份、候選人、政黨、地區查詢
+- ✅ **Multi-level Data**: Support village, township, and county-level
+  data aggregation
+- ✅ **多層級資料**: 支援村里級、鄉鎮級、縣市級資料聚合
+- ✅ **Standardized Format**: Unified field design for consistent data
+  structure
+- ✅ **標準化格式**: 統一欄位設計，確保資料結構一致性
+- ✅ **Helper Functions**: `tv_list_available_recalls()`,
+  `tv_list_available_candidates()`, etc.
+- ✅ **輔助函式**: 等輔助查詢功能
+- ✅ **Complete Data**: Village-level voting results for all 31
+  legislators nationwide
+- ✅ **完整資料**: 涵蓋全台 31 位立委的村里級投票結果
 
--   ✅ **Standardized Fields**: Unified data field design (`year`, `data_type`, `office`, etc.)
--   ✅ **標準化欄位**: 實作統一的資料欄位設計
--   ✅ **File Naming Convention**: Adopts `{year}_{office}_recall.csv` format
--   ✅ **檔案命名規範**: 採用標準格式
--   ✅ **Caching Mechanism**: Automatic download and local cache management
--   ✅ **快取機制**: 自動下載與本地快取管理
+#### **Data Infrastructure \| 資料基礎建設**
 
-### 🔄 In Development | 開發中功能
+- ✅ **Standardized Fields**: Unified data field design (`year`,
+  `data_type`, `office`, etc.)
+- ✅ **標準化欄位**: 實作統一的資料欄位設計
+- ✅ **File Naming Convention**: Adopts `{year}_{office}_recall.csv`
+  format
+- ✅ **檔案命名規範**: 採用標準格式
+- ✅ **Caching Mechanism**: Automatic download and local cache
+  management
+- ✅ **快取機制**: 自動下載與本地快取管理
 
-#### **Election Data Expansion | 選舉資料擴展**
+### 🔄 In Development \| 開發中功能
 
--   🔄 **`tv_get_election()` Function**: Unified election data query interface
--   🔄 **函式**: 統一的選舉資料查詢介面
--   🔄 **Historical Presidential Elections**: 2024, 2020, 2016 presidential election data
--   🔄 **歷年總統選舉**: 總統副總統選舉資料
--   🔄 **Legislative Elections**: 2024, 2020 legislative election data
--   🔄 **立法委員選舉**: 立法委員選舉資料
+#### **Election Data Expansion \| 選舉資料擴展**
 
-## Installation | 安裝
+- 🔄 **`tv_get_election()` Function**: Unified election data query
+  interface
+- 🔄 **函式**: 統一的選舉資料查詢介面
+- 🔄 **Historical Presidential Elections**: 2024, 2020, 2016
+  presidential election data
+- 🔄 **歷年總統選舉**: 總統副總統選舉資料
+- 🔄 **Legislative Elections**: 2024, 2020 legislative election data
+- 🔄 **立法委員選舉**: 立法委員選舉資料
 
-You can install the development version of TaiwanVote from GitHub using `devtools`:
+## Installation \| 安裝
+
+You can install the development version of TaiwanVote from GitHub using
+`devtools`:
 
 您可以使用 `devtools` 從 GitHub 安裝 `TaiwanVote` 套件：
 
@@ -72,30 +101,39 @@ You can install the development version of TaiwanVote from GitHub using `devtool
 devtools::install_github("MiaoChien0204/TaiwanVote")
 ```
 
-## Quick Start | 快速上手
+## Quick Start \| 快速上手
 
-### Load Package | 載入套件
+### Load Package \| 載入套件
 
 ``` r
 library(TaiwanVote)
 ```
 
-## ⚠️ Important Usage Notes | 重要使用須知
+## ⚠️ Important Usage Notes \| 重要使用須知
 
-### Understanding `is_elected` and `is_recalled` Fields | 理解 `is_elected` 和 `is_recalled` 欄位
+### Understanding `is_elected` and `is_recalled` Fields \| 理解 `is_elected` 和 `is_recalled` 欄位
 
-這些欄位可能容易造成誤解！請注意 These fields can be misleading! Please note:
+這些欄位可能容易造成誤解！請注意 These fields can be misleading! Please
+note:
 
--   **`is_elected` / `is_recalled` 反映的是「在指定行政層級的勝出狀況」，不是實際選舉結果**
--   **These fields reflect "winning status at the specified administrative level", NOT actual election outcomes**
--   同一候選人在不同層級可能有不同的 `is_elected` 值 The same candidate may have different `is_elected` values at different levels
--   投票所層級的 `is_elected = TRUE` 僅表示該候選人在該投票所得票最高 At polling station level, `is_elected = TRUE` only means the candidate got the most votes at that specific polling station
+- **`is_elected` / `is_recalled`
+  反映的是「在指定行政層級的勝出狀況」，不是實際選舉結果**
+- **These fields reflect “winning status at the specified administrative
+  level”, NOT actual election outcomes**
+- 同一候選人在不同層級可能有不同的 `is_elected` 值 The same candidate
+  may have different `is_elected` values at different levels
+- 投票所層級的 `is_elected = TRUE` 僅表示該候選人在該投票所得票最高 At
+  polling station level, `is_elected = TRUE` only means the candidate
+  got the most votes at that specific polling station
 
-### All Statistics Vary by Administrative Level | 所有統計數字都隨行政區層級變化
+### All Statistics Vary by Administrative Level \| 所有統計數字都隨行政區層級變化
 
-所有數字欄位都會根據 `adm_level` 參數重新計算 All numerical fields are recalculated based on the `adm_level` parameter: - `votes`, `vote_percentage`, `turnout_rate`, `total_valid`, etc. - 得票數、得票率、投票率、有效票總數等
+所有數字欄位都會根據 `adm_level` 參數重新計算 All numerical fields are
+recalculated based on the `adm_level` parameter: - `votes`,
+`vote_percentage`, `turnout_rate`, `total_valid`, etc. -
+得票數、得票率、投票率、有效票總數等
 
-### View Available Data | 查看可用資料
+### View Available Data \| 查看可用資料
 
 ``` r
 # View available recall election data | 查看可用的罷免案資料
@@ -111,13 +149,17 @@ tv_list_available_parties()
 tv_list_available_areas(adm_level = "county")
 ```
 
-## Core Features | 核心功能
+## Core Features \| 核心功能
 
-⚠️ **重要提醒 Important Note**: 所有統計數字（得票數、得票率、投票率、勝負狀況等）都會根據指定的行政區層級重新計算 All statistics (vote counts, percentages, turnout rates, winner status, etc.) are recalculated based on the specified administrative level
+⚠️ **重要提醒 Important Note**:
+所有統計數字（得票數、得票率、投票率、勝負狀況等）都會根據指定的行政區層級重新計算
+All statistics (vote counts, percentages, turnout rates, winner status,
+etc.) are recalculated based on the specified administrative level
 
-### 1. Administrative Level Selection | 行政區層級選擇
+### 1. Administrative Level Selection \| 行政區層級選擇
 
-Specify the administrative level to determine data aggregation and winner calculation:
+Specify the administrative level to determine data aggregation and
+winner calculation:
 
 指定行政區層級來決定資料聚合方式和當選者計算基準：
 
@@ -135,7 +177,7 @@ tv_get_recall(year = 2025, adm_level = "polling_station")
 tv_get_election(year = 2024, office = "president", adm_level = "town")
 ```
 
-### 2. Data Filtering | 資料篩選
+### 2. Data Filtering \| 資料篩選
 
 Apply multiple filters simultaneously to retrieve specific subsets:
 
@@ -165,7 +207,7 @@ tv_get_election(
 )
 ```
 
-### 3. Combined Operations | 組合操作
+### 3. Combined Operations \| 組合操作
 
 Specify administrative level while applying filters:
 
@@ -201,28 +243,35 @@ tv_get_election(
 )
 ```
 
-## Understanding Administrative Levels | 理解行政區層級
+## Understanding Administrative Levels \| 理解行政區層級
 
-The `adm_level` parameter determines both data aggregation and how **ALL statistical fields** are calculated:
+The `adm_level` parameter determines both data aggregation and how **ALL
+statistical fields** are calculated:
 
 `adm_level` 參數決定資料聚合方式以及**所有統計欄位**的計算基準：
 
-### ⚠️ Critical Understanding | 重要概念
+### ⚠️ Critical Understanding \| 重要概念
 
-**All numbers change with administrative level | 所有數字都會隨行政區層級改變**:
+**All numbers change with administrative level \|
+所有數字都會隨行政區層級改變**:
 
--   `votes`: Aggregated vote counts at specified level | 指定行政區層級的聚合得票數
+- `votes`: Aggregated vote counts at specified level \|
+  指定行政區層級的聚合得票數
 
--   `vote_percentage`: Percentage within specified level | 在指定行政區層級內的得票率
+- `vote_percentage`: Percentage within specified level \|
+  在指定行政區層級內的得票率
 
--   `turnout_rate`: Turnout rate within specified level | 指定行政區層級內的投票率
+- `turnout_rate`: Turnout rate within specified level \|
+  指定行政區層級內的投票率
 
--   `is_elected`/`is_recalled`: Winner status at specified level | 指定行政區層級的勝負狀態
+- `is_elected`/`is_recalled`: Winner status at specified level \|
+  指定行政區層級的勝負狀態
 
-**Example**: A candidate may have 30% at polling station level but 45% at county level
+**Example**: A candidate may have 30% at polling station level but 45%
+at county level  
 **範例**: 同一候選人在投票所層級可能得票率 30%，但在縣市層級可能是 45%
 
-### Administrative Level Impact | 行政區層級的影響
+### Administrative Level Impact \| 行政區層級的影響
 
 ``` r
 # Same candidate, different administrative levels = different results
@@ -254,7 +303,7 @@ county_data <- tv_get_election(
 # 結果：不同行政區層級可能有不同的候選人被標記為「當選」
 ```
 
-### Practical Examples | 實際範例
+### Practical Examples \| 實際範例
 
 ``` r
 # Example 1: Presidential election at different levels
@@ -333,11 +382,12 @@ party_county <- tv_get_recall(
 # 顯示國民黨候選人在縣市層級的罷免成功/失敗結果
 ```
 
-## Function Interface Design | 函式介面設計
+## Function Interface Design \| 函式介面設計
 
-### Unified Data Retrieval Interface | 統一資料擷取介面
+### Unified Data Retrieval Interface \| 統一資料擷取介面
 
-Standardized data retrieval functions with consistent `adm_level` parameter:
+Standardized data retrieval functions with consistent `adm_level`
+parameter:
 
 標準化的資料擷取函數，配備一致的 `adm_level` 參數：
 
@@ -363,216 +413,241 @@ tv_get_recall(
 )
 ```
 
-### Standardized Parameter Design | 標準化參數設計
+### Standardized Parameter Design \| 標準化參數設計
 
-#### **Core Parameters | 核心參數:**
+#### **Core Parameters \| 核心參數:**
 
--   **`year`** *(Required 必填)*
+- **`year`** *(Required 必填)*
 
-    -   **Description 描述**: Election/Recall year 選舉/罷免年份
+  - **Description 描述**: Election/Recall year 選舉/罷免年份
 
-    -   **Example Values 範例值**: `2024`, `2025`
+  - **Example Values 範例值**: `2024`, `2025`
 
--   **`office`** *(Required 必填)*
+- **`office`** *(Required 必填)*
 
-    -   **Description 描述**: Office type 職務類型
+  - **Description 描述**: Office type 職務類型
 
-    -   **Example Values 範例值**:
+  - **Example Values 範例值**:
 
-        -   `"president"` (總統)
+    - `"president"` (總統)
 
-        -   `"legislator"` (立法委員)
+    - `"legislator"` (立法委員)
 
-        -   `"mayor"` (縣市長)
+    - `"mayor"` (縣市長)
 
-        -   `"councilor"` (縣市議員)
+    - `"councilor"` (縣市議員)
 
--   **`adm_level`** *(Optional 選填)*
+- **`adm_level`** *(Optional 選填)*
 
-    -   **Description 描述**:
-        Administrative level you would like to aggregate 指定聚合的行政區層級
+  - **Description 描述**:  
+    Administrative level you would like to aggregate
+    指定聚合的行政區層級
 
-    -   **Default 預設值**: `"polling_station"`
+  - **Default 預設值**: `"polling_station"`
 
-    -   **Example Values 範例值**:
+  - **Example Values 範例值**:
 
-        -   `"polling_station"` (投票所)
+    - `"polling_station"` (投票所)
 
-        -   `"village"` (村里)
+    - `"village"` (村里)
 
-        -   `"town"` (鄉鎮市區)
+    - `"town"` (鄉鎮市區)
 
-        -   `"county"` (縣市)
+    - `"county"` (縣市)
 
--   **`sub_type`** *(Optional 選填)*
+- **`sub_type`** *(Optional 選填)*
 
-    -   **Description 描述**: Office subtype 職務子類型
+  - **Description 描述**: Office subtype 職務子類型
 
-    -   **Example Values 範例值**:
+  - **Example Values 範例值**:
 
-        -   `"regional"` (區域)
+    - `"regional"` (區域)
 
-        -   `"indigenous"` (原住民)
+    - `"indigenous"` (原住民)
 
-        -   `"at_large"` (不分區)
+    - `"at_large"` (不分區)
 
--   **`county_name`** *(Optional 選填)*
+- **`county_name`** *(Optional 選填)*
 
-    -   **Description 描述**: County/City name 縣市名稱
+  - **Description 描述**: County/City name 縣市名稱
 
-    -   **Example Values 範例值**: `"新竹市"`, `"桃園市"`
+  - **Example Values 範例值**: `"新竹市"`, `"桃園市"`
 
--   **`town_name`** *(Optional 選填)*
+- **`town_name`** *(Optional 選填)*
 
-    -   **Description 描述**: Town/District name with county 鄉鎮市區名稱（含縣市）
+  - **Description 描述**: Town/District name with county
+    鄉鎮市區名稱（含縣市）
 
-    -   **Example Values 範例值**: `"新竹市東區"`, `"桃園市桃園區"`
+  - **Example Values 範例值**: `"新竹市東區"`, `"桃園市桃園區"`
 
--   **`village_name`** *(Optional 選填)*
+- **`village_name`** *(Optional 選填)*
 
-    -   **Description 描述**: Village name with full address 縣市鄉鎮村里名稱
+  - **Description 描述**: Village name with full address
+    縣市鄉鎮村里名稱
 
-    -   **Example Values 範例值**: `"新竹市東區三民里"`, `"桃園市桃園區文中里"`
+  - **Example Values 範例值**: `"新竹市東區三民里"`,
+    `"桃園市桃園區文中里"`
 
--   **`candidate`** *(Optional 選填)*
+- **`candidate`** *(Optional 選填)*
 
-    -   **Description 描述**: Candidate name 候選人姓名
+  - **Description 描述**: Candidate name 候選人姓名
 
-    -   **Example Values 範例值**: `"鄭正鈐"`, `"蔡英文"`, `c("賴清德", "柯文哲")` (multiple values 多值)
+  - **Example Values 範例值**: `"鄭正鈐"`, `"蔡英文"`,
+    `c("賴清德", "柯文哲")` (multiple values 多值)
 
--   **`party`** *(Optional 選填)*
+- **`party`** *(Optional 選填)*
 
-    -   **Description 描述**: Party name 政黨名稱
+  - **Description 描述**: Party name 政黨名稱
 
-    -   **Example Values 範例值**: `"中國國民黨"`, `"民主進步黨"`, `c("民主進步黨", "台灣民眾黨")` (multiple values 多值)
+  - **Example Values 範例值**: `"中國國民黨"`, `"民主進步黨"`,
+    `c("民主進步黨", "台灣民眾黨")` (multiple values 多值)
 
-#### Office 與 sub\_type 對照表
+#### Office 與 sub_type 對照表
 
 <table>
 <colgroup>
-<col width="59%" />
-<col width="40%" />
+<col style="width: 59%" />
+<col style="width: 40%" />
 </colgroup>
 <thead>
-<tr class="header">
-<th align="left">office</th>
-<th align="left">sub_type</th>
+<tr>
+<th>office</th>
+<th>sub_type</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left"><p><code>&quot;president&quot;</code> (總統)</p></td>
-<td align="left"></td>
+<tr>
+<td><code>"president"</code> (總統)</td>
+<td></td>
 </tr>
-<tr class="even">
-<td align="left"><p><code>&quot;legislator&quot;</code> (立法委員)</p></td>
-<td align="left"><p><code>&quot;regional&quot;</code> (區域)</p>
-<p><code>&quot;at_large&quot;</code> (不分區)</p>
-<p><code>&quot;indigenous_lowland&quot;</code> (平地原住民)</p>
-<p><code>&quot;indigenous_highland&quot;</code> (山地原住民)</p></td>
+<tr>
+<td><code>"legislator"</code> (立法委員)</td>
+<td><p><code>"regional"</code> (區域)</p>
+<p><code>"at_large"</code> (不分區)</p>
+<p><code>"indigenous_lowland"</code> (平地原住民)</p>
+<p><code>"indigenous_highland"</code> (山地原住民)</p></td>
 </tr>
-<tr class="odd">
-<td align="left"><p><code>&quot;mayor&quot;</code> (縣市長)</p></td>
-<td align="left"></td>
+<tr>
+<td><code>"mayor"</code> (縣市長)</td>
+<td></td>
 </tr>
-<tr class="even">
-<td align="left"><p><code>&quot;councilor&quot;</code> (縣市議員)</p></td>
-<td align="left"><p><code>&quot;regional&quot;</code> (區域)</p>
-<p><code>&quot;indigenous_lowland&quot;</code> (平地原住民)</p>
-<p><code>&quot;indigenous_highland&quot;</code> (山地原住民)</p></td>
+<tr>
+<td><code>"councilor"</code> (縣市議員)</td>
+<td><p><code>"regional"</code> (區域)</p>
+<p><code>"indigenous_lowland"</code> (平地原住民)</p>
+<p><code>"indigenous_highland"</code> (山地原住民)</p></td>
 </tr>
-<tr class="odd">
-<td align="left"><p><code>&quot;indigenous_district_chief&quot;</code> (原住民區長)</p></td>
-<td align="left"></td>
+<tr>
+<td><code>"indigenous_district_chief"</code> (原住民區長)</td>
+<td></td>
 </tr>
-<tr class="even">
-<td align="left"><p><code>&quot;indigenous_district_representative&quot;</code> (原住民區民代表)</p></td>
-<td align="left"></td>
+<tr>
+<td><code>"indigenous_district_representative"</code>
+(原住民區民代表)</td>
+<td></td>
 </tr>
-<tr class="odd">
-<td align="left"><p><code>&quot;township_mayor&quot;</code> (鄉鎮市長)</p></td>
-<td align="left"></td>
+<tr>
+<td><code>"township_mayor"</code> (鄉鎮市長)</td>
+<td></td>
 </tr>
-<tr class="even">
-<td align="left"><p><code>&quot;township_representative&quot;</code> (鄉鎮市民代表)</p></td>
-<td align="left"><p><code>&quot;regional&quot;</code> (區域)</p>
-<p><code>&quot;indigenous&quot;</code> (原住民)</p></td>
+<tr>
+<td><code>"township_representative"</code> (鄉鎮市民代表)</td>
+<td><p><code>"regional"</code> (區域)</p>
+<p><code>"indigenous"</code> (原住民)</p></td>
 </tr>
-<tr class="odd">
-<td align="left"><p><code>&quot;village_chief&quot;</code> (村里長)</p></td>
-<td align="left"></td>
+<tr>
+<td><code>"village_chief"</code> (村里長)</td>
+<td></td>
 </tr>
 </tbody>
 </table>
 
-#### **Standardized Output Fields | 標準化輸出欄位:**
+#### **Standardized Output Fields \| 標準化輸出欄位:**
 
 All functions return data with unified field design:
 
 所有函式回傳的資料都採用統一的欄位設計：
 
-**Basic Information | 基本資訊:**
+**Basic Information \| 基本資訊:**
 
--   `year` (Year 年份)
+- `year` (Year 年份)
 
--   `data_type` (Data type: "election" or "recall" 資料類型)
+- `data_type` (Data type: “election” or “recall” 資料類型)
 
--   `office` (Office type 職務類型)
+- `office` (Office type 職務類型)
 
--   `sub_type` (Office subtype 職務子類型)
+- `sub_type` (Office subtype 職務子類型)
 
-**Geographic Information | 地理資訊:**
+**Geographic Information \| 地理資訊:**
 
--   `county` (County/City 縣市)
+- `county` (County/City 縣市)
 
--   `town` (Town/District 鄉鎮市區)
+- `town` (Town/District 鄉鎮市區)
 
--   `village` (Village 村里)
+- `village` (Village 村里)
 
--   `polling_station_id` (Polling station ID 投票所代碼)
+- `polling_station_id` (Polling station ID 投票所代碼)
 
-**Candidate Information | 候選人資訊:**
+**Candidate Information \| 候選人資訊:**
 
--   `candidate_name` (Candidate name 候選人姓名)
+- `candidate_name` (Candidate name 候選人姓名)
 
--   `party` (Political party 政黨)
+- `party` (Political party 政黨)
 
-**Election Statistics | 選舉統計:**
+**Election Statistics \| 選舉統計:**
 
-⚠️ **重要提醒 Important Note**: 所有統計數字都會根據 `adm_level` 參數進行相應計算 All statistics are calculated based on the `adm_level` parameter
+⚠️ **重要提醒 Important Note**: 所有統計數字都會根據 `adm_level`
+參數進行相應計算 All statistics are calculated based on the `adm_level`
+parameter
 
--   `votes` (Vote count/Agree votes 得票數/同意票數)
-    -   該候選人在指定層級的得票數 Vote count for the candidate at the specified level
--   `vote_percentage` (Vote percentage 得票率)
-    -   該候選人在指定層級的得票率 Vote percentage at the specified level
--   `is_elected` / `is_recalled` (Winner status at specified administrative level 在指定行政層級的勝出狀態)
-    -   ⚠️ **重要概念 Key Concept**: 此欄位反映「在指定行政層級範圍內的勝負狀況」，不是實際選舉結果 This field reflects "winning status within the specified administrative level scope", not actual election outcomes
-    -   **計算邏輯 Calculation Logic**: 先依據 `adm_level` 聚合計算，再進行候選人篩選 First aggregate by `adm_level`, then apply candidate filtering
-    -   **Election**: TRUE if candidate received most votes at the specified level 在指定層級得票最多為 TRUE
-    -   **Recall**: TRUE if agree votes \> disagree votes at the specified level 在指定層級同意票多於不同意票為 TRUE
-    -   **關鍵特性 Key Feature**: 同一候選人在不同行政層級可能有不同的 is\_elected 值 Same candidate may have different is\_elected values at different levels
-    -   **選舉**：該候選人在指定層級得票最多為 TRUE
-    -   **罷免**：該層級同意票多於不同意票為 TRUE
--   `invalid` (Invalid votes 無效票數)
-    -   指定層級的無效票數 Invalid votes at the specified level
--   `total_valid` (Total valid votes 有效票總數)
-    -   **選舉案 Election**: 所有候選人得票數總和 Sum of all candidates' votes
-    -   **罷免案 Recall**: 同意票 + 不同意票 `votes + disagree`
-    -   **重要 Important**: 不包含無效票 Does NOT include invalid votes
-    -   指定層級的有效票總數 Total valid votes at the specified level
--   `total_ballots` (Total ballots cast 總投票數)
-    -   **計算公式 Formula**: `total_valid + invalid` (有效票 + 無效票)
-    -   指定層級的總投票數 Total ballots cast at the specified level
--   `registered` (Registered voters 選舉人數)
-    -   指定層級的選舉人數 Registered voters at the specified level
--   `turnout_rate` (Voter turnout rate 投票率)
-    -   **計算公式 Formula**: `total_ballots / registered * 100`
-    -   **說明 Note**: `total_ballots = total_valid + invalid` (有效票 + 無效票)
-    -   指定層級的投票率 Voter turnout rate at the specified level
+- `votes` (Vote count/Agree votes 得票數/同意票數)
+  - 該候選人在指定層級的得票數 Vote count for the candidate at the
+    specified level
+- `vote_percentage` (Vote percentage 得票率)
+  - 該候選人在指定層級的得票率 Vote percentage at the specified level
+- `is_elected` / `is_recalled` (Winner status at specified
+  administrative level 在指定行政層級的勝出狀態)
+  - ⚠️ **重要概念 Key Concept**:
+    此欄位反映「在指定行政層級範圍內的勝負狀況」，不是實際選舉結果 This
+    field reflects “winning status within the specified administrative
+    level scope”, not actual election outcomes
+  - **計算邏輯 Calculation Logic**: 先依據 `adm_level`
+    聚合計算，再進行候選人篩選 First aggregate by `adm_level`, then
+    apply candidate filtering
+  - **Election**: TRUE if candidate received most votes at the specified
+    level 在指定層級得票最多為 TRUE
+  - **Recall**: TRUE if agree votes \> disagree votes at the specified
+    level 在指定層級同意票多於不同意票為 TRUE
+  - **平票處理 Tie Handling**: 在得票數相同時，所有最高票者都標記為 TRUE
+    When tied for highest votes, all top vote-getters are marked TRUE
+  - **關鍵特性 Key Feature**: 同一候選人在不同行政層級可能有不同的
+    is_elected 值 Same candidate may have different is_elected values at
+    different levels
+  - **選舉**：該候選人在指定層級得票最多為 TRUE
+  - **罷免**：該層級同意票多於不同意票為 TRUE
+- `invalid` (Invalid votes 無效票數)
+  - 指定層級的無效票數 Invalid votes at the specified level
+- `total_valid` (Total valid votes 有效票總數)
+  - **選舉案 Election**: 所有候選人得票數總和 Sum of all candidates’
+    votes
+  - **罷免案 Recall**: 同意票 + 不同意票 `votes + disagree`
+  - **重要 Important**: 不包含無效票 Does NOT include invalid votes
+  - 指定層級的有效票總數 Total valid votes at the specified level
+- `total_ballots` (Total ballots cast 總投票數)
+  - **計算公式 Formula**: `total_valid + invalid` (有效票 + 無效票)
+  - 指定層級的總投票數 Total ballots cast at the specified level
+- `registered` (Registered voters 選舉人數)
+  - 指定層級的選舉人數 Registered voters at the specified level
+- `turnout_rate` (Voter turnout rate 投票率)
+  - **計算公式 Formula**: `total_ballots / registered * 100`
+  - **說明 Note**: `total_ballots = total_valid + invalid` (有效票 +
+    無效票)
+  - 指定層級的投票率 Voter turnout rate at the specified level
 
-## Available Legislators for 2025 Recall | 可查詢立委名單 (2025年罷免案)
+## Available Legislators for 2025 Recall \| 可查詢立委名單 (2025年罷免案)
 
-The 2025 recall election covers the following 31 legislators (all members of the Kuomintang):
+The 2025 recall election covers the following 31 legislators (all
+members of the Kuomintang):
 
 目前 2025 年罷免案涵蓋以下 31 位立法委員（全部屬於中國國民黨）：
 
@@ -610,46 +685,63 @@ The 2025 recall election covers the following 31 legislators (all members of the
 | 傅崐萁           | 花蓮縣選舉區      | 中國國民黨 |
 | 丁學忠           | 雲林縣第1選舉區   | 中國國民黨 |
 
-## Data Information | 資料說明
+## Data Information \| 資料說明
 
--   **Data Source**: Central Election Commission (中央選舉委員會)
--   **Data Level**: Village-level (aggregatable to township and county levels)
--   **資料層級**: 村里級（可聚合至鄉鎮級、縣市級）
--   **Update Frequency**: Updated upon official election result announcements
--   **更新頻率**: 隨選舉結果公布更新
--   **Caching Mechanism**: Automatic local caching to reduce repeated downloads
--   **快取機制**: 自動快取至本地，減少重複下載
--   **Data Format**: Standardized CSV format following tidy data principles
--   **資料格式**: 標準化 CSV 格式，符合 tidy data 原則
+- **Data Source**: Central Election Commission (中央選舉委員會)
+- **Data Level**: Village-level (aggregatable to township and county
+  levels)
+- **資料層級**: 村里級（可聚合至鄉鎮級、縣市級）
+- **Update Frequency**: Updated upon official election result
+  announcements
+- **更新頻率**: 隨選舉結果公布更新
+- **Caching Mechanism**: Automatic local caching to reduce repeated
+  downloads
+- **快取機制**: 自動快取至本地，減少重複下載
+- **Data Format**: Standardized CSV format following tidy data
+  principles
+- **資料格式**: 標準化 CSV 格式，符合 tidy data 原則
 
-## Use Cases | 使用案例
+## Use Cases \| 使用案例
 
 This package is particularly valuable for:
 
 本套件特別適用於：
 
--   **Academic Research | 學術研究**: Retrieving standardized election data at various administrative levels for political science, sociology, and electoral studies
--   **Journalism | 新聞報導**: Obtaining election data for data-driven analysis and reporting across different geographic scales
--   **Civil Society | 公民社會**: Accessing election results for citizen participation and democratic oversight
--   **Policy Analysis | 政策分析**: Gathering election data for government and think tank research
--   **Educational Purposes | 教育用途**: Teaching quantitative political analysis with real Taiwan election data
+- **Academic Research \| 學術研究**: Retrieving standardized election
+  data at various administrative levels for political science,
+  sociology, and electoral studies
+- **Journalism \| 新聞報導**: Obtaining election data for data-driven
+  analysis and reporting across different geographic scales  
+- **Civil Society \| 公民社會**: Accessing election results for citizen
+  participation and democratic oversight
+- **Policy Analysis \| 政策分析**: Gathering election data for
+  government and think tank research
+- **Educational Purposes \| 教育用途**: Teaching quantitative political
+  analysis with real Taiwan election data
 
-## License | 授權
+## License \| 授權
 
 MIT License
 
-## Issues & Contributions | 問題回報與貢獻
+## Issues & Contributions \| 問題回報與貢獻
 
-For bug reports, feature requests, or contributions, please visit our [GitHub Issues](https://github.com/MiaoChien0204/TaiwanVote/issues).
+For bug reports, feature requests, or contributions, please visit our
+[GitHub Issues](https://github.com/MiaoChien0204/TaiwanVote/issues).
 
-如有問題或建議，請至 [GitHub Issues](https://github.com/MiaoChien0204/TaiwanVote/issues) 回報。
+如有問題或建議，請至 [GitHub
+Issues](https://github.com/MiaoChien0204/TaiwanVote/issues) 回報。
 
-## About | 關於
+## About \| 關於
 
-**TaiwanVote** aims to provide a convenient and standardized interface for retrieving Taiwan's election data at different administrative levels. We believe that easily accessible data with flexible level controls can promote deeper academic research, informed journalism, and enhanced civic participation in Taiwan's democratic processes.
+**TaiwanVote** aims to provide a convenient and standardized interface
+for retrieving Taiwan’s election data at different administrative
+levels. We believe that easily accessible data with flexible level
+controls can promote deeper academic research, informed journalism, and
+enhanced civic participation in Taiwan’s democratic processes.
 
-`TaiwanVote` 套件旨在提供一個便捷且標準化的介面，幫助使用者在不同行政層級擷取臺灣的選舉數據。我們相信透過可彈性控制層級的開放資料，能夠促進更深入的學術研究、新聞報導以及公民參與。
+`TaiwanVote`
+套件旨在提供一個便捷且標準化的介面，幫助使用者在不同行政層級擷取臺灣的選舉數據。我們相信透過可彈性控制層級的開放資料，能夠促進更深入的學術研究、新聞報導以及公民參與。
 
 ------------------------------------------------------------------------
 
-*Built with ❤️ for Taiwan's democracy | 為臺灣民主而建*
+*Built with ❤️ for Taiwan’s democracy \| 為臺灣民主而建*
