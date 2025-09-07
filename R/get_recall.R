@@ -106,6 +106,15 @@ tv_get_recall <- function(year = NULL,
     stop("adm_level must be one of: ", paste(valid_adm_levels, collapse = ", "))
   }
   
+  # Validate that adm_level is not higher than geographic filter level
+  if (!is.null(village_name) && adm_level %in% c("county", "town")) {
+    stop("When using village_name filter, adm_level must be 'village' or 'polling_station'")
+  }
+  
+  if (!is.null(town_name) && adm_level == "county") {
+    stop("When using town_name filter, adm_level must be 'town', 'village', or 'polling_station'")
+  }
+  
   # Load data for each year
   all_data <- NULL
   
@@ -142,10 +151,16 @@ tv_get_recall <- function(year = NULL,
         if (county_match > 0) {
           county_part <- regmatches(town, county_match)
           town_part <- substring(town, nchar(county_part) + 1)
-          if (nchar(town_part) > 0) {
+          
+          # Validate that town_part is not empty and contains valid administrative unit suffixes
+          if (nchar(town_part) > 0 && grepl("(區|鎮|鄉|市)$", town_part)) {
             town_filters[[length(town_filters) + 1]] <- 
               list(county = county_part, town = town_part)
+          } else {
+            stop("Invalid town_name format: '", town, "'. Expected format: '新竹市東區' (county + district/town)")
           }
+        } else {
+          stop("town_name must include county/city name (e.g., '新竹市東區')")
         }
       } else {
         stop("town_name must include county/city name (e.g., '新竹市東區')")

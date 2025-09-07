@@ -110,6 +110,25 @@ library(TaiwanVote)
 
 所有數字欄位都會根據 `adm_level` 參數重新計算 All numerical fields are recalculated based on the `adm_level` parameter: - `votes`, `vote_percentage`, `turnout_rate`, `total_valid`, etc. - 得票數、得票率、投票率、有效票總數等
 
+### Administrative Level and Geographic Filter Consistency \| 行政層級與地理篩選的一致性
+
+⚠️ **重要限制 Important Restriction**: `adm_level` 不能高於地理篩選的層級 The `adm_level` cannot be higher than the geographic filter level
+
+```{r eval=FALSE}
+# ✅ 正確組合 Correct combinations
+tv_get_election(county_name = "新北市", adm_level = "county")
+tv_get_election(town_name = "新北市新店區", adm_level = "town")
+tv_get_election(village_name = "新北市新店區中正里", adm_level = "village")
+
+# ❌ 錯誤組合 Invalid combinations (will throw error)
+tv_get_election(town_name = "新北市新店區", adm_level = "county")     # Error!
+tv_get_election(village_name = "新北市新店區中正里", adm_level = "town")  # Error!
+tv_get_election(village_name = "新北市新店區中正里", adm_level = "county") # Error!
+```
+
+**設計理念 Design Rationale**: - 防止產生誤導性結果 Prevents misleading results - 確保數據語義清晰 Ensures clear data semantics\
+- 如需跨層級比較，請分別查詢後自行處理 For cross-level comparisons, query separately and process manually
+
 ### View Available Data \| 查看可用資料
 
 ```{r eval=FALSE}
@@ -439,13 +458,15 @@ tv_get_recall(
 
 -   **`town_name`** *(Optional 選填)*
 
-    -   **Description 描述**: Town/District name with county 鄉鎮市區名稱（含縣市）
+    -   **Description 描述**: Town/District name with administrative suffix 鄉鎮市區名稱（須含行政區劃後綴：區、鎮、鄉、市）
 
-    -   **Example Values 範例值**: `"新竹市東區"`, `"桃園市桃園區"`
+    -   **Example Values 範例值**: `"東區"`, `"桃園區"`, `"竹北市"`, `"峨眉鄉"`
+
+    -   **Note 注意**: Must end with proper administrative unit suffix (區/鎮/鄉/市) 必須以正確的行政區劃後綴結尾
 
 -   **`village_name`** *(Optional 選填)*
 
-    -   **Description 描述**: Village name with full address 縣市鄉鎮村里名稱
+    -   **Description 描述**: Village name with full address 村里名稱（須含完整地址）
 
     -   **Example Values 範例值**: `"新竹市東區三民里"`, `"桃園市桃園區文中里"`
 
