@@ -30,7 +30,7 @@
 #'   \item{candidate_name}{Candidate name}
 #'   \item{party}{Political party}
 #'   \item{votes}{Number of recall votes}
-#'   \item{vote_percentage}{Percentage of recall votes}
+#'   \item{vote_percentage}{Percentage of recall votes (calculated)}
 #'   \item{is_recalled}{Logical indicating if recall was successful}
 #'   \item{disagree}{Number of votes against recall}
 #'   \item{invalid}{Number of invalid votes}

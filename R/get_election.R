@@ -30,7 +30,7 @@
 #'   \item{candidate_name}{Candidate name}
 #'   \item{party}{Political party}
 #'   \item{votes}{Number of votes received}
-#'   \item{vote_percentage}{Percentage of votes}
+#'   \item{vote_percentage}{Percentage of votes (calculated)}
 #'   \item{is_elected}{Logical indicating if candidate was elected}
 #'   \item{invalid}{Number of invalid votes}
 #'   \item{total_valid}{Total valid votes}

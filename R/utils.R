@@ -121,6 +121,12 @@ tv_aggregate_and_calculate_winners <- function(data, adm_level = "polling_statio
   
   if (adm_level == "polling_station") {
     # For polling station level, just calculate winners without aggregation
+    # But we need to add vote_percentage since it's not in raw CSV files
+    data <- data %>%
+      dplyr::mutate(
+        vote_percentage = dplyr::if_else(total_valid > 0, votes / total_valid * 100, NA_real_)
+      )
+    
     if (length(group_vars) == 0) {
       data <- dplyr::mutate(data, is_elected = votes == max(votes, na.rm = TRUE))
     } else {
@@ -237,7 +243,12 @@ tv_aggregate_and_calculate_recall_results <- function(data, adm_level = "polling
   
   if (adm_level == "polling_station") {
     # For polling station level, just calculate recall results without aggregation
-    data <- dplyr::mutate(data, is_recalled = votes > disagree)
+    # But we need to add vote_percentage since it's not in raw CSV files
+    data <- data %>%
+      dplyr::mutate(
+        vote_percentage = dplyr::if_else(total_valid > 0, votes / total_valid * 100, NA_real_),
+        is_recalled = votes > disagree
+      )
   } else {
     # For other levels, aggregate first then calculate recall results
     candidate_group_vars <- c(group_vars, "candidate_name", "party")
