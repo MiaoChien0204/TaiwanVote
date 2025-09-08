@@ -616,10 +616,6 @@ All CSV files in `data-raw/release/` follow a standardized field structure. The 
   - **Election**: Votes received by the candidate 候選人得票數
   - **Recall**: "Agree" votes for recall 罷免同意票數
 
-- `vote_percentage` *(numeric)*: ⚠️ **Raw percentage from CEC Excel** 得票率（中選會原始數值）
-  - **Format**: Decimal (e.g., 0.4523 = 45.23%) 小數格式
-  - **Calculation**: `votes / total_valid` (calculated by this package) 本套件計算：得票數 / 有效票總數
-
 #### **Ballot Statistics \| 選票統計**
 ⚠️ **All ballot counts are raw values directly from CEC Excel files \| 所有選票統計皆為中選會 Excel 檔案原始數值**
 
@@ -652,16 +648,9 @@ Additional field only present in recall election data (2025_legislator_recall.cs
 
    所有統計欄位皆包含**直接從中央選舉委員會 Excel 檔案擷取的原始數值**，未經本套件任何修改或計算。
 
-2. **Calculated Fields \| 計算欄位**: Only `vote_percentage` is calculated by this package using the formula `votes / total_valid`. All other numerical fields are preserved as-is from the source Excel files.
+2. **No Calculated Fields \| 無計算欄位**: All numerical fields are preserved exactly as-is from the source Excel files. No derived calculations (such as vote percentages) are included in the raw data.
 
-   僅有 `vote_percentage` 由本套件使用公式 `votes / total_valid` 計算。其他所有數值欄位皆保持 Excel 檔案原貌。
-
-3. **Data Completeness \| 資料完整性**: All three datasets now contain the complete set of 8 raw statistical fields from the Central Election Commission:
-
-   三個資料集現已包含來自中央選舉委員會的完整 8 個原始統計欄位：
-   - ✅ `2024_president_election.csv`: 20 fields (完整)
-   - ✅ `2025_legislator_recall.csv`: 21 fields (完整，包含額外的 `disagree` 欄位)
-   - ✅ `2024_legislator_election.csv`: 20 fields (完整)
+   所有數值欄位都完全保持 Excel 檔案原貌。原始資料中不包含任何衍生計算（如得票率）。
 
 ### Field Mapping to CEC Excel Headers \| 欄位與中選會 Excel 標題對應
 

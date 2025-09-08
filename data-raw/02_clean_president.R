@@ -5,9 +5,10 @@
 
 # Output columns aligned with README vision:
 # year, data_type, office, sub_type, county, town, village, polling_station_id,
-# candidate_name, party, votes, vote_percentage,
+# candidate_name, party, votes,
 # invalid, total_valid, total_ballots, registered, turnout_rate
 # Note: is_elected is NOT included in raw data - calculated dynamically in R package
+# Note: vote_percentage is NOT included - not available in original Excel files
 
 suppressPackageStartupMessages({
   library(readxl)
@@ -105,7 +106,7 @@ clean_one = function(file, candidate_mapping) {
       "town", "village", "precinct_id",
       "candidate1_votes", "candidate2_votes", "candidate3_votes",
       "total_valid", "invalid", "total_ballots", 
-      "ballots_not_returned", "ballots_issued", "ballots_remaining",
+      "not_voted_but_issued", "issued_ballots", "unused_ballots",
       "registered", "turnout_rate_pct"
     )[1:ncol(raw)]
   } else {
@@ -140,7 +141,7 @@ clean_one = function(file, candidate_mapping) {
   numeric_cols = intersect(names(df_clean), 
                           c("candidate1_votes", "candidate2_votes", "candidate3_votes",
                             "total_valid", "invalid", "total_ballots", "registered",
-                            "ballots_not_returned", "ballots_issued", "ballots_remaining",
+                            "not_voted_but_issued", "issued_ballots", "unused_ballots",
                             "turnout_rate_pct"))
   
   for (col in numeric_cols) {
@@ -186,19 +187,18 @@ clean_one = function(file, candidate_mapping) {
       filter(!is.na(candidate_name)) %>%
       # Add party information
       left_join(candidate_mapping, by = "candidate_name") %>%
-      # Calculate vote percentage 
+      # Note: is_elected removed - will be calculated dynamically in R package functions
+      # Note: vote_percentage removed - not available in raw Excel data
       mutate(
-        votes = to_num(votes),
-        vote_percentage = ifelse(total_valid > 0, votes / total_valid, NA_real_)
-        # Note: is_elected removed - will be calculated dynamically in R package functions
+        votes = to_num(votes)
       ) %>%
       # Remove grouping and is_elected calculation
       select(
         # Raw data columns (no calculated is_elected field)
         year, data_type, office, sub_type, county, town, village, polling_station_id,
-        candidate_name, party, votes, vote_percentage,
-        # Additional election-specific columns
-        invalid, total_valid, total_ballots, registered, turnout_rate
+        candidate_name, party, votes,
+        # Additional election-specific columns - all raw values from Excel
+        invalid, total_valid, total_ballots, not_voted_but_issued, issued_ballots, unused_ballots, registered, turnout_rate
       )
   } else {
     cli_warn("Expected 3 candidate columns, found {length(candidate_cols)}")
