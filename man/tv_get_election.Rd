@@ -19,12 +19,14 @@ tv_get_election(
 \arguments{
 \item{year}{Numeric vector. The election year(s). Currently supports: 2024.}
 
-\item{office}{Character. The type of office. Currently supports: "president".}
+\item{office}{Character. The type of office. Currently supports: "president", "legislator".}
 
 \item{adm_level}{Character. Administrative level for data aggregation.
 Options: "polling_station" (default), "village", "town", "county".}
 
-\item{sub_type}{Character. The sub-type of election. For president, this should be NULL.}
+\item{sub_type}{Character. The sub-type of election. For president, this should be NULL.
+For legislator, options are: "regional", "indigenous_lowland", "indigenous_highland".
+If NULL for legislator, defaults to "regional" for performance.}
 
 \item{county_name}{Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").}
 
@@ -52,7 +54,7 @@ A tibble containing election results with the following columns:
 \item{candidate_name}{Candidate name}
 \item{party}{Political party}
 \item{votes}{Number of votes received}
-\item{vote_percentage}{Percentage of votes}
+\item{vote_percentage}{Percentage of votes (calculated)}
 \item{is_elected}{Logical indicating if candidate was elected}
 \item{invalid}{Number of invalid votes}
 \item{total_valid}{Total valid votes}
@@ -63,12 +65,18 @@ A tibble containing election results with the following columns:
 }
 \description{
 This function retrieves election data for Taiwan's presidential and legislative elections.
-Currently supports 2024 presidential election data.
+Currently supports 2024 presidential election data and 2024 legislator election data.
 }
 \examples{
 \dontrun{
 # Get all 2024 presidential election data
 tv_get_election(year = 2024, office = "president")
+
+# Get 2024 regional legislator election data
+tv_get_election(year = 2024, office = "legislator", sub_type = "regional")
+
+# Get 2024 indigenous lowland legislator election data  
+tv_get_election(year = 2024, office = "legislator", sub_type = "indigenous_lowland")
 
 # Get data for a specific county
 tv_get_election(year = 2024, office = "president", county_name = "新竹市")

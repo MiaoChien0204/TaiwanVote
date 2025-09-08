@@ -264,8 +264,9 @@ for (folder in folders_to_process) {
   
   cli_alert_info("Found {length(files)} files")
   
-  # Process first file only for testing - change to all files for production
-  folder_data = clean_one(files[1], sub_type)
+  # Process all files in production mode
+  cli_alert_info("Processing all {length(files)} files")
+  folder_data = map_dfr(files, clean_one, sub_type = sub_type)
   all_data = bind_rows(all_data, folder_data)
 }
 
@@ -276,15 +277,31 @@ cli_alert_info("Counties: {length(unique(all_data$county))}")
 cli_alert_info("Sub-types: {paste(unique(all_data$sub_type), collapse=', ')}")
 
 if (nrow(all_data) > 0) {
-  output_file = file.path(out_dir, "2024_legislator_election.csv")
-  write_csv(all_data, output_file)
+  # Generate separate CSV files by sub_type
+  for (sub_type_val in unique(all_data$sub_type)) {
+    subset_data <- filter(all_data, sub_type == sub_type_val)
+    output_file <- file.path(out_dir, paste0("2024_legislator_", sub_type_val, ".csv"))
+    write_csv(subset_data, output_file)
+    
+    cli_alert_success("Generated {sub_type_val}: {output_file} ({nrow(subset_data)} rows)")
+  }
+  
+  # Also generate combined file for convenience
+  combined_output_file = file.path(out_dir, "2024_legislator_election.csv")
+  write_csv(all_data, combined_output_file)
   
   cli_h1("Processing complete!")
-  cli_alert_success("Output saved to: {output_file}")
+  cli_alert_success("Combined file: {combined_output_file} ({nrow(all_data)} rows)")
   
-  # Show sample data
-  cli_alert_info("Sample data:")
-  print(head(all_data, 3))
+  # Show sample data from each sub_type
+  cli_alert_info("Sample data by sub_type:")
+  for (sub_type_val in unique(all_data$sub_type)) {
+    subset_data <- filter(all_data, sub_type == sub_type_val)
+    cli_alert_info("{sub_type_val}: {nrow(subset_data)} rows")
+    if (nrow(subset_data) > 0) {
+      print(head(subset_data, 2))
+    }
+  }
 } else {
   cli_alert_danger("No data processed!")
 }

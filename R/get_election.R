@@ -2,13 +2,15 @@
 #'
 #' @description
 #' This function retrieves election data for Taiwan's presidential and legislative elections.
-#' Currently supports 2024 presidential election data.
+#' Currently supports 2024 presidential election data and 2024 legislator election data.
 #'
 #' @param year Numeric vector. The election year(s). Currently supports: 2024.
-#' @param office Character. The type of office. Currently supports: "president".
+#' @param office Character. The type of office. Currently supports: "president", "legislator".
 #' @param adm_level Character. Administrative level for data aggregation. 
 #'   Options: "polling_station" (default), "village", "town", "county".
 #' @param sub_type Character. The sub-type of election. For president, this should be NULL.
+#'   For legislator, options are: "regional", "indigenous_lowland", "indigenous_highland".
+#'   If NULL for legislator, defaults to "regional" for performance.
 #' @param county_name Character vector. County or city names to filter by (e.g., "新竹市", "桃園市").
 #' @param town_name Character vector. Town/district names with county included 
 #'   (e.g., "新竹市東區", "桃園市桃園區").
@@ -43,6 +45,12 @@
 #' \dontrun{
 #' # Get all 2024 presidential election data
 #' tv_get_election(year = 2024, office = "president")
+#' 
+#' # Get 2024 regional legislator election data
+#' tv_get_election(year = 2024, office = "legislator", sub_type = "regional")
+#' 
+#' # Get 2024 indigenous lowland legislator election data  
+#' tv_get_election(year = 2024, office = "legislator", sub_type = "indigenous_lowland")
 #' 
 #' # Get data for a specific county
 #' tv_get_election(year = 2024, office = "president", county_name = "新竹市")
@@ -111,13 +119,18 @@ tv_get_election <- function(year = NULL,
     stop("Currently only 2024 election data is available")
   }
   
-  if (!office %in% "president") {
-    stop("Currently only 'president' office type is supported")
+  if (!office %in% c("president", "legislator")) {
+    stop("Currently only 'president' and 'legislator' office types are supported")
   }
   
   if (office == "president" && !is.null(sub_type)) {
     warning("sub_type is ignored for presidential elections")
     sub_type <- NULL
+  }
+  
+  if (office == "legislator" && is.null(sub_type)) {
+    warning("sub_type is recommended for legislator elections to improve performance. Using 'regional' as default.")
+    sub_type <- "regional"
   }
   
   # Load data for each year
@@ -126,12 +139,22 @@ tv_get_election <- function(year = NULL,
   for (y in year) {
     if (office == "president") {
       file_name <- paste0(y, "_president_election.csv")
+      data <- tv_read_data(file_name)
+    } else if (office == "legislator") {
+      # Use specific sub_type file for better performance
+      if (!is.null(sub_type)) {
+        file_name <- paste0(y, "_legislator_", sub_type, ".csv")
+        data <- tv_read_data(file_name)
+      } else {
+        # Fallback to combined file if no sub_type specified
+        file_name <- paste0(y, "_legislator_election.csv")
+        data <- tv_read_data(file_name)
+      }
     } else {
       # Future support for other office types
       file_name <- paste0(y, "_", office, "_election.csv")
+      data <- tv_read_data(file_name)
     }
-    
-    data <- tv_read_data(file_name)
     
     if (is.null(all_data)) {
       all_data <- data
