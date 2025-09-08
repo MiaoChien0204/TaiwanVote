@@ -671,46 +671,147 @@ parameter
     無效票)
   - 指定層級的投票率 Voter turnout rate at the specified level
 
-## Available Legislators for 2025 Recall \| 可查詢立委名單 (2025年罷免案)
+## Raw Data Field Definitions \| 原始資料欄位定義
 
-The 2025 recall election covers the following 31 legislators (all
-members of the Kuomintang):
+### Common Fields (All Datasets) \| 共通欄位（所有資料集）
 
-目前 2025 年罷免案涵蓋以下 31 位立法委員（全部屬於中國國民黨）：
+All CSV files in `data-raw/release/` follow a standardized field
+structure. The fields marked with ⚠️ **contain raw values directly from
+Central Election Commission Excel files** and are NOT calculated by this
+package.
 
-| Candidate 候選人 | Constituency 選區 | Party 政黨 |
-|:-----------------|:------------------|:-----------|
-| 馬文君           | 南投縣第1選舉區   | 中國國民黨 |
-| 游顥             | 南投縣第2選舉區   | 中國國民黨 |
-| 林沛祥           | 基隆市選舉區      | 中國國民黨 |
-| 羅明才           | 新北市第11選舉區  | 中國國民黨 |
-| 廖先翔           | 新北市第12選舉區  | 中國國民黨 |
-| 洪孟楷           | 新北市第1選舉區   | 中國國民黨 |
-| 葉元之           | 新北市第7選舉區   | 中國國民黨 |
-| 張智倫           | 新北市第8選舉區   | 中國國民黨 |
-| 林德福           | 新北市第9選舉區   | 中國國民黨 |
-| 鄭正鈐           | 新竹市選舉區      | 中國國民黨 |
-| 林思銘           | 新竹縣第2選舉區   | 中國國民黨 |
-| 牛煦庭           | 桃園市第1選舉區   | 中國國民黨 |
-| 涂權吉           | 桃園市第2選舉區   | 中國國民黨 |
-| 魯明哲           | 桃園市第3選舉區   | 中國國民黨 |
-| 萬美玲           | 桃園市第4選舉區   | 中國國民黨 |
-| 呂玉玲           | 桃園市第5選舉區   | 中國國民黨 |
-| 邱若華           | 桃園市第6選舉區   | 中國國民黨 |
-| 顏寬恒           | 臺中市第2選舉區   | 中國國民黨 |
-| 楊瓊瓔           | 臺中市第3選舉區   | 中國國民黨 |
-| 廖偉翔           | 臺中市第4選舉區   | 中國國民黨 |
-| 黃健豪           | 臺中市第5選舉區   | 中國國民黨 |
-| 羅廷瑋           | 臺中市第6選舉區   | 中國國民黨 |
-| 江啟臣           | 臺中市第8選舉區   | 中國國民黨 |
-| 王鴻薇           | 臺北市第3選舉區   | 中國國民黨 |
-| 李彥秀           | 臺北市第4選舉區   | 中國國民黨 |
-| 羅智強           | 臺北市第6選舉區   | 中國國民黨 |
-| 徐巧芯           | 臺北市第7選舉區   | 中國國民黨 |
-| 賴士葆           | 臺北市第8選舉區   | 中國國民黨 |
-| 黃建賓           | 臺東縣選舉區      | 中國國民黨 |
-| 傅崐萁           | 花蓮縣選舉區      | 中國國民黨 |
-| 丁學忠           | 雲林縣第1選舉區   | 中國國民黨 |
+所有 `data-raw/release/` 中的 CSV 檔案都遵循標準化的欄位結構。標記 ⚠️
+的欄位**包含直接來自中央選舉委員會 Excel
+檔案的原始數值**，非本套件計算。
+
+#### **Identification Fields \| 識別欄位**
+
+- `year` *(integer)*: Election/Recall year 選舉/罷免年份 (e.g., 2024,
+  2025)
+- `data_type` *(character)*: Data type 資料類型 (`"election"` or
+  `"recall"`)
+- `office` *(character)*: Office type 職務類型 (`"president"`,
+  `"legislator"`, etc.)
+- `sub_type` *(character)*: Office subtype 職務子類型 (`"regional"`,
+  `"indigenous_lowland"`, etc.)
+
+#### **Geographic Fields \| 地理欄位**
+
+- `county` *(character)*: County/City name 縣市名稱 (e.g., “臺北市”,
+  “新北市”)
+- `town` *(character)*: Town/District name 鄉鎮市區名稱 (e.g., “中山區”,
+  “板橋區”)
+- `village` *(character)*: Village name 村里名稱 (e.g., “中山里”,
+  “海山里”)
+- `polling_station_id` *(character)*: Polling station ID 投票所代碼
+  (e.g., “001”, “002”)
+
+#### **Candidate Fields \| 候選人欄位**
+
+- `candidate_name` *(character)*: Candidate full name 候選人姓名 (e.g.,
+  “賴清德”, “鄭正鈐”)
+- `party` *(character)*: Political party 政黨名稱 (e.g., “民主進步黨”,
+  “中國國民黨”)
+
+#### **Vote Statistics \| 投票統計**
+
+⚠️ **All statistical fields contain raw values from CEC Excel files \|
+所有統計欄位皆為中選會 Excel 檔案原始數值**
+
+- `votes` *(numeric)*: ⚠️ **Raw vote count from CEC Excel**
+  該候選人得票數/同意票數（中選會原始數值）
+  - **Election**: Votes received by the candidate 候選人得票數
+  - **Recall**: “Agree” votes for recall 罷免同意票數
+- `vote_percentage` *(numeric)*: ⚠️ **Raw percentage from CEC Excel**
+  得票率（中選會原始數值）
+  - **Format**: Decimal (e.g., 0.4523 = 45.23%) 小數格式
+  - **Calculation**: `votes / total_valid` (calculated by this package)
+    本套件計算：得票數 / 有效票總數
+
+#### **Ballot Statistics \| 選票統計**
+
+⚠️ **All ballot counts are raw values directly from CEC Excel files \|
+所有選票統計皆為中選會 Excel 檔案原始數值**
+
+- `invalid` *(numeric)*: ⚠️ **Raw invalid vote count**
+  無效票數（中選會原始數值）
+- `total_valid` *(numeric)*: ⚠️ **Raw valid vote total**
+  有效票總數（中選會原始數值）
+  - **Election**: Sum of all candidates’ votes 所有候選人得票數總和
+  - **Recall**: `votes + disagree` (agree + disagree votes) 同意票 +
+    不同意票
+- `total_ballots` *(numeric)*: ⚠️ **Raw total ballots cast**
+  投票數（中選會原始數值）
+  - **Formula**: `total_valid + invalid` 有效票 + 無效票
+- `not_voted_but_issued` *(numeric)*: ⚠️ **Raw count of issued but
+  unused ballots** 已領未投票數（中選會原始數值）
+- `issued_ballots` *(numeric)*: ⚠️ **Raw count of ballots issued**
+  發出票數（中選會原始數值）
+- `unused_ballots` *(numeric)*: ⚠️ **Raw count of unused ballots**
+  用餘票數（中選會原始數值）
+- `registered` *(numeric)*: ⚠️ **Raw registered voter count**
+  選舉人數（中選會原始數值）
+- `turnout_rate` *(numeric)*: ⚠️ **Raw turnout rate from CEC Excel**
+  投票率（中選會原始數值）
+  - **Format**: Decimal (e.g., 0.7234 = 72.34%) 小數格式
+  - **Formula**: `total_ballots / registered` 投票數 / 選舉人數
+
+### Recall-Specific Fields \| 罷免案專用欄位
+
+Additional field only present in recall election data
+(2025_legislator_recall.csv):
+
+僅出現在罷免案資料中的額外欄位（2025_legislator_recall.csv）：
+
+- `disagree` *(numeric)*: ⚠️ **Raw “disagree” vote count from CEC
+  Excel** 不同意票數（中選會原始數值）
+  - Votes against the recall 罷免不同意票數
+
+### Data Integrity Notes \| 資料完整性說明
+
+1.  **Raw Data Fidelity \| 原始資料忠實度**: All statistical fields
+    (`votes`, `invalid`, `total_valid`, `total_ballots`,
+    `not_voted_but_issued`, `issued_ballots`, `unused_ballots`,
+    `registered`, `turnout_rate`) contain **original values directly
+    extracted from Central Election Commission Excel files** without any
+    modification or calculation by this package.
+
+    所有統計欄位皆包含**直接從中央選舉委員會 Excel
+    檔案擷取的原始數值**，未經本套件任何修改或計算。
+
+2.  **Calculated Fields \| 計算欄位**: Only `vote_percentage` is
+    calculated by this package using the formula `votes / total_valid`.
+    All other numerical fields are preserved as-is from the source Excel
+    files.
+
+    僅有 `vote_percentage` 由本套件使用公式 `votes / total_valid`
+    計算。其他所有數值欄位皆保持 Excel 檔案原貌。
+
+3.  **Data Completeness \| 資料完整性**: All three datasets now contain
+    the complete set of 8 raw statistical fields from the Central
+    Election Commission:
+
+    三個資料集現已包含來自中央選舉委員會的完整 8 個原始統計欄位：
+
+    - ✅ `2024_president_election.csv`: 20 fields (完整)
+    - ✅ `2025_legislator_recall.csv`: 21 fields (完整，包含額外的
+      `disagree` 欄位)
+    - ✅ `2024_legislator_election.csv`: 20 fields (完整)
+
+### Field Mapping to CEC Excel Headers \| 欄位與中選會 Excel 標題對應
+
+| CSV Field              | CEC Excel Header        | 中文說明             |
+|------------------------|-------------------------|----------------------|
+| `votes`                | 候選人得票數 / 同意票數 | 得票數/同意票        |
+| `invalid`              | 無效票數                | 無效票               |
+| `total_valid`          | 有效票數                | 有效票總數           |
+| `total_ballots`        | 投票數                  | 總投票數             |
+| `not_voted_but_issued` | 已領未投票數            | 已領未投票數         |
+| `issued_ballots`       | 發出票數                | 發出票數             |
+| `unused_ballots`       | 用餘票數                | 用餘票數             |
+| `registered`           | 選舉人數                | 選舉人數             |
+| `turnout_rate`         | 投票率                  | 投票率               |
+| `disagree`             | 不同意票數              | 不同意票（僅罷免案） |
 
 ## Data Information \| 資料說明
 
